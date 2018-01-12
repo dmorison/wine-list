@@ -1,0 +1,23 @@
+{
+  "name": "my-react-app-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": ".",
+  "dependencies": {
+    "node-sass-chokidar": "0.0.3",
+    "npm-run-all": "^4.1.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.0.17"
+  },
+  "scripts": {
+    "build-public-css": "node-sass-chokidar src/ -o public/dist",
+    "watch-public-css": "npm run build-public-css && node-sass-chokidar src/ -o public/dist --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-public-css start-js",
+    "build-js": "react-scripts build",
+    "build": "npm-run-all -p build-public-css build-js",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

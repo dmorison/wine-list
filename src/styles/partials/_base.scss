@@ -1,0 +1,66 @@
+/* ------------------
+BASE STYLES
+------------------ */
+html {
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+body {
+    position: relative;
+    overflow-x: hidden;
+    font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+html,
+body,
+div,
+span,
+header,
+nav,
+section,
+article,
+aside,
+footer,
+figure,
+figcaption,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+}
+
+header,
+nav,
+section,
+article,
+aside,
+footer,
+figure,
+figcaption {
+  display: block;
+}
+
+/**** clearfix ****/
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/**** tables ****/
+table{
+    border-collapse:collapse;
+    border-spacing:0;
+}
