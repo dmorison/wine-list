@@ -3,12 +3,18 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+	}
+
 	getSheetsData() {
-		const key = '2PACX-1vSt81EPodQlmjR3hMJkqB1cr2MFODU8rzemtqAR_OfqIUT2szHemzPOKyziRyuDYt1TYdmND2BoTrmL';
-		const urlJson = `https://spreadsheets.google.com/feeds/list/${key}/od6/public/basic?hl=en_US&alt=json`;
-		const urlCsv = `https://docs.google.com/spreadsheets/d/e/${key}/pub?output=csv`;
+		const apiKey = 'API_KEY';
+		const sheetId = '1Jlj-AtNGT1-12nuvX83KTGSBY7FLMrdSXdySQOGXCm8';
+		const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1?key=${apiKey}`;
+		// const urlJson = `https://spreadsheets.google.com/feeds/list/${sheetId}/od6/public/basic?alt=json`;
+		// const urlCsv = `https://docs.google.com/spreadsheets/d/e/${sheetId}/pub?output=csv`;
 		
-		axios.get(urlJson)
+		axios.get(apiV4)
 			.then((response) => {
 				console.log(response);
 			})
@@ -22,7 +28,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        
+
       </div>
     );
   }
