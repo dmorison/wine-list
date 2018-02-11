@@ -7,9 +7,9 @@ const WineList = (props) => {
 	});
 
 	return (
-		<div>
+		<ul>
 			{wineList}
-		</div>
+		</ul>
 	);
 }
 

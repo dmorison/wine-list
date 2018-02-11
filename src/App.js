@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Variables from './variables';
 import WineList from './components/wine_list';
 
 class App extends Component {
@@ -12,15 +13,14 @@ class App extends Component {
 	}
 
 	getSheetsData() {
+		const apiKey = Variables().API_KEY;
 		const sheetId = '1HsWe9WKMlxfcpZJHyp_Tf15oGoolIP1cLEpISpvlEKY';
-		const urlJson = `https://spreadsheets.google.com/feeds/list/${sheetId}/od6/public/basic?alt=json`;
-		// const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1`;
-		// const urlCsv = `https://docs.google.com/spreadsheets/d/e/${sheetId}/pub?output=csv`;
+		const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1?key=${apiKey}`;
 		
-		axios.get(urlJson)
+		axios.get(apiV4)
 			.then((response) => {
-				const wines = response.data.feed.entry;
-				console.log(wines);
+				console.log(response);
+				const wines = response.data.values;
 				this.setState({ wines });
 			})
 			.catch((error) => {
@@ -38,4 +38,3 @@ class App extends Component {
 }
 
 export default App;
-
