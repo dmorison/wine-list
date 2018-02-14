@@ -3,13 +3,17 @@ import axios from 'axios';
 import Variables from './utils/variables';
 // import DataHandle from './utils/data_handle';
 import WineList from './components/wine_list';
+import WineDetail from './components/wine_detail';
 
 class App extends Component {
 
 	constructor(props) {
 		super(props);
 
-		this.state = { wines: [] };
+		this.state = {
+			wines: [],
+			selectedWine: null
+		};
 
 		// this.handleClick = this.handleClick.bind(this);
 		this.getSheetsData();
@@ -24,7 +28,10 @@ class App extends Component {
 			.then((response) => {
 				console.log(response);
 				const wines = response.data.values;
-				this.setState({ wines });
+				this.setState({
+					wines: wines,
+					selectedWine: wines[1]
+				});
 			})
 			.catch((error) => {
 				console.log(error);
@@ -39,7 +46,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <WineList wines={this.state.wines} />
+      	<WineDetail wine={this.state.selectedWine} />
+        <WineList
+        	onWineSelect={selectedWine => this.setState({selectedWine})}
+        	wines={this.state.wines} />
         {/*<button onClick={this.handleClick}>Get Wines</button>*/}
       </div>
     );
