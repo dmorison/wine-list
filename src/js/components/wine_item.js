@@ -1,16 +1,14 @@
 import React from 'react';
 
 const WineItem = ({wine}) => {
-	const wineItem = wine.map((item) => {
-		return item;
-	});
+	// console.log(wine);
 
 	return (
 		<ul>
-			<li>{wineItem[0]}</li>
-			<li>{wineItem[1]}</li>
-			<li>{wineItem[2]}</li>
-			<li>{wineItem[3]}</li>
+			<li>{wine[0]}</li>
+			<li>{wine[1]}</li>
+			<li>{wine[2]}</li>
+			<li>{wine[3]}</li>
 		</ul>
 	);
 
