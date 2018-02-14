@@ -1,14 +1,19 @@
 import React from 'react';
 
 const WineItem = ({wine}) => {
-	console.log(wine);
 	const wineItem = wine.map((item) => {
 		return item;
 	});
 
 	return (
-		<li>{wineItem}</li>
+		<ul>
+			<li>{wineItem[0]}</li>
+			<li>{wineItem[1]}</li>
+			<li>{wineItem[2]}</li>
+			<li>{wineItem[3]}</li>
+		</ul>
 	);
+
 }
 
 export default WineItem;
