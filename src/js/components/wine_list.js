@@ -3,6 +3,8 @@ import WineItem from './wine_item';
 
 const WineList = (props) => {
 
+	console.log(props);
+
 	const wineList = props.wines.map((wine, index) => {
 		if (index < 1) { return; }
 		return <WineItem wine={wine} />;
