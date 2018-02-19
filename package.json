@@ -5,9 +5,11 @@
   "homepage": ".",
   "dependencies": {
     "axios": "^0.17.1",
+    "bootstrap": "^3.3.7",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.2",
     "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
     "react-scripts": "1.0.17"
   },
@@ -15,7 +17,7 @@
     "build-public-css": "node-sass-chokidar src/ -o public/dist",
     "watch-public-css": "npm run build-public-css && node-sass-chokidar src/ -o public/dist --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-public-css start-js",
+    "start": "npm-run-all -p start-js",
     "build-js": "react-scripts build",
     "build": "npm-run-all -p build-public-css build-js",
     "test": "react-scripts test --env=jsdom",

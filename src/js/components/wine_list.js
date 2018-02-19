@@ -1,4 +1,9 @@
 import React from 'react';
+import {
+	Grid,
+	Row
+} from 'react-bootstrap';
+
 import WineItem from './wine_item';
 
 const WineList = (props) => {
@@ -14,9 +19,11 @@ const WineList = (props) => {
 	});
 
 	return (
-		<div>
-			{wineList}
-		</div>
+		<Grid>
+			<Row>
+				{wineList}
+			</Row>
+		</Grid>
 	);
 
 }
