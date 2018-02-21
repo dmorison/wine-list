@@ -8,4 +8,17 @@ body {
 
 .wine-item {
 	background-color: transparent;
+
+	.thumbnail {
+		text-align: center;
+	}
+
+	.thumbnail-img {
+		border: 6px solid #fff;
+		border-radius: 6px;
+
+		&.item-Red {
+			border-color: #BF2626;
+		}
+	}
 }

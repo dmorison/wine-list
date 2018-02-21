@@ -26,7 +26,7 @@ class App extends Component {
 		
 		axios.get(apiV4)
 			.then((response) => {
-				console.log(response);
+				// console.log(response);
 				const wines = response.data.values;
 				this.setState({
 					wines: wines,
