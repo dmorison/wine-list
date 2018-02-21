@@ -6,11 +6,43 @@ body {
   	padding: 0;
 }
 
+.wine-list {
+	width: 100%;
+	margin: 0 auto;
+
+	@media only screen and (min-width: 768px) {
+		width: 762px; /* 2 columns */
+	}
+
+	@media only screen and (min-width: 992px) {
+		width: 984px; /* 3 columns */
+	}
+
+	@media only screen and (min-width: 1200px) {
+		width: 1192px; /* 4 columns */
+	}
+}
+
 .wine-item {
+	width: 100%;
 	background-color: transparent;
+	padding: 10px;
+
+	@media only screen and (min-width: 768px) {
+		width: 381px; /* 2 columns */
+	}
+
+	@media only screen and (min-width: 992px) {
+		width: 328px; /* 3 columns */
+	}
+
+	@media only screen and (min-width: 1200px) {
+		width: 298px; /* 4 columns */
+	}
 
 	.thumbnail {
 		text-align: center;
+		margin-bottom: 0px;
 	}
 
 	.thumbnail-img {

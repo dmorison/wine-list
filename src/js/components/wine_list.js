@@ -1,8 +1,9 @@
 import React from 'react';
-import {
-	Grid,
-	Row
-} from 'react-bootstrap';
+import Masonry from 'react-masonry-component';
+// import {
+// 	Grid,
+// 	Row
+// } from 'react-bootstrap';
 
 import WineItem from './wine_item';
 
@@ -19,11 +20,11 @@ const WineList = (props) => {
 	});
 
 	return (
-		<Grid>
-			<Row>
-				{wineList}
-			</Row>
-		</Grid>
+		<div className="wine-list">
+			<Masonry>
+					{wineList}
+			</Masonry>
+		</div>
 	);
 
 }

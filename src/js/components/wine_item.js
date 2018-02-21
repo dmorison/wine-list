@@ -1,11 +1,11 @@
 import React from 'react';
-import { Col } from 'react-bootstrap';
+// import { Col } from 'react-bootstrap';
 
 const WineItem = ({wine, onWineSelect}) => {
-	console.log(wine);
+	// console.log(wine);
 
 	return (
-		<Col className="wine-item" xs={12} sm={6} md={3}>
+		<div className="wine-item">
 			<a href="#" onClick={() => onWineSelect(wine)}>
 				<div className="thumbnail">
 					<div className="caption">
@@ -19,7 +19,7 @@ const WineItem = ({wine, onWineSelect}) => {
 					</div>
 				</div>
 			</a>
-		</Col>
+		</div>
 	);
 
 }
