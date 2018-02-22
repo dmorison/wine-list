@@ -46,7 +46,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      	{/*<WineDetail wine={this.state.selectedWine} />*/}
+      	<WineDetail wine={this.state.selectedWine} />
         <WineList
         	onWineSelect={selectedWine => this.setState({selectedWine})}
         	wines={this.state.wines} />
