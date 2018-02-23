@@ -10,12 +10,14 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
+		this.handleSelectedWine = this.handleSelectedWine.bind(this);
+
 		this.state = {
 			wines: [],
-			selectedWine: null
+			selectedWine: null,
+			show: false
 		};
 
-		// this.handleClick = this.handleClick.bind(this);
 		this.getSheetsData();
 	}
 
@@ -38,17 +40,21 @@ class App extends Component {
 			});
 	}
 
-	// handleClick() {
-	// 	console.log('handleClick');
-	// 	this.setState({ wines: DataHandle().wines });
-	// }
+	handleSelectedWine(wine) {
+		this.setState({
+			selectedWine: wine,
+			show: true
+		});
+	}
 
   render() {
     return (
       <div className="App">
-      	<WineDetail wine={this.state.selectedWine} />
+      	<WineDetail
+      		wine={this.state.selectedWine}
+      		handleModal={this.state.show} />
         <WineList
-        	onWineSelect={selectedWine => this.setState({selectedWine})}
+        	onWineSelect={selectedWine => this.handleSelectedWine(selectedWine)}
         	wines={this.state.wines} />
         {/*<button onClick={this.handleClick}>Get Wines</button>*/}
       </div>

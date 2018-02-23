@@ -7,7 +7,8 @@ class WineDetail extends Component {
 		super(props);
 		
 		this.handleShow = this.handleShow.bind(this);
-		this.handleClose - this.handleClose.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+		console.log(this.props.handleModal);
 		
 		this.state = {
 			show: false
@@ -16,6 +17,7 @@ class WineDetail extends Component {
 
 	handleClose() {
 		this.setState({ show: false });
+		console.log(this.state.show);
 	}
 
 	handleShow() {

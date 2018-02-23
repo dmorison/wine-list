@@ -14,7 +14,7 @@ const WineList = (props) => {
 		return (
 			<WineItem
 				onWineSelect={props.onWineSelect}
-				key={wine[14]}
+				key={`${index}_${wine[14]}`}
 				wine={wine} />
 		);
 	});
