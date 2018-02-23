@@ -6,7 +6,7 @@ const WineItem = ({wine, onWineSelect}) => {
 
 	return (
 		<div className="wine-item">
-			<a href="#" onClick={() => onWineSelect(wine)}>
+			<a onClick={() => onWineSelect(wine)}>
 				<div className="thumbnail">
 					<div className="caption">
 						<p>{wine[1]}</p>
