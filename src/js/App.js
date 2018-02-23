@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Modal, Button } from 'react-bootstrap';
 import Variables from './utils/variables';
 // import DataHandle from './utils/data_handle';
 import WineList from './components/wine_list';
-import WineDetail from './components/wine_detail';
+// import WineDetail from './components/wine_detail';
 
 class App extends Component {
 
 	constructor(props) {
 		super(props);
 
-		this.handleSelectedWine = this.handleSelectedWine.bind(this);
+		this.handleShow = this.handleShow.bind(this);
+		this.handleClose = this.handleClose.bind(this);
 
 		this.state = {
 			wines: [],
@@ -40,7 +42,11 @@ class App extends Component {
 			});
 	}
 
-	handleSelectedWine(wine) {
+	handleClose() {
+		this.setState({ show: false });
+	}
+
+	handleShow(wine) {
 		this.setState({
 			selectedWine: wine,
 			show: true
@@ -48,15 +54,38 @@ class App extends Component {
 	}
 
   render() {
+  	let activeWine = null;
+  	if (this.state.selectedWine) {
+  		activeWine = (
+  			<Modal show={this.state.show} onHide={this.handleClose}>
+					<img src={`./${this.state.selectedWine[14]}.png`} width="120" height="120" />
+					<ul>
+						<li>Type: {this.state.selectedWine[0]}</li>
+						<li>{this.state.selectedWine[1]} - {this.state.selectedWine[2]}</li>
+						<li>{this.state.selectedWine[4]}, {this.state.selectedWine[3]}</li>
+						<li>{this.state.selectedWine[5]}</li>
+						<li>{this.state.selectedWine[6]}{this.state.selectedWine[7] !== 'null' ? ': ' + this.state.selectedWine[7] : ''}</li>
+						<li>Style: {this.state.selectedWine[9]}</li>
+						<li>Rating: {this.state.selectedWine[8]}</li>
+						<li>Purchased from {this.state.selectedWine[11]} on {this.state.selectedWine[10]}</li>
+						<li>Price: {this.state.selectedWine[12]}</li>
+						<li>Stock: {this.state.selectedWine[13]}</li>
+					</ul>
+					<Button onClick={this.handleClose}>Close</Button>
+				</Modal>
+  		);
+  	}
+
     return (
       <div className="App">
-      	<WineDetail
+      	{/*<WineDetail
       		wine={this.state.selectedWine}
-      		handleModal={this.state.show} />
+      		handleModal={this.state.show} />*/}
         <WineList
-        	onWineSelect={selectedWine => this.handleSelectedWine(selectedWine)}
+        	onWineSelect={selectedWine => this.handleShow(selectedWine)}
         	wines={this.state.wines} />
         {/*<button onClick={this.handleClick}>Get Wines</button>*/}
+        {activeWine}
       </div>
     );
   }
