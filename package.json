@@ -18,7 +18,7 @@
     "build-public-css": "node-sass-chokidar src/ -o public/dist",
     "watch-public-css": "npm run build-public-css && node-sass-chokidar src/ -o public/dist --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "npm-run-all -p start-js",
+    "start": "npm-run-all -p watch-public-css start-js",
     "build-js": "react-scripts build",
     "build": "npm-run-all -p build-public-css build-js",
     "test": "react-scripts test --env=jsdom",

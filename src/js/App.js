@@ -4,6 +4,7 @@ import { Modal, Button } from 'react-bootstrap';
 import Variables from './utils/variables';
 // import DataHandle from './utils/data_handle';
 import WineList from './components/wine_list';
+import SideMenu from './components/side-menu';
 // import WineDetail from './components/wine_detail';
 
 class App extends Component {
@@ -78,14 +79,19 @@ class App extends Component {
 
     return (
       <div className="App">
-      	{/*<WineDetail
-      		wine={this.state.selectedWine}
-      		handleModal={this.state.show} />*/}
-        <WineList
-        	onWineSelect={selectedWine => this.handleShow(selectedWine)}
-        	wines={this.state.wines} />
-        {/*<button onClick={this.handleClick}>Get Wines</button>*/}
-        {activeWine}
+      	<div className="outer-container">
+	      	{/*<WineDetail
+	      		wine={this.state.selectedWine}
+	      		handleModal={this.state.show} />*/}
+	      	<SideMenu />
+	      	<main className="page-wrap">
+		        <WineList
+		        	onWineSelect={selectedWine => this.handleShow(selectedWine)}
+		        	wines={this.state.wines} />
+		        {/*<button onClick={this.handleClick}>Get Wines</button>*/}
+		        {activeWine}
+		      </main>
+	      </div>
       </div>
     );
   }

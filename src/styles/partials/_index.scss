@@ -1,9 +1,23 @@
 body {
+	height: 100%;
 	background-image: url(../../images/light_wood.png);
 	background-repeat: repeat;
 	background-color: #efefef;
   	margin: 0;
   	padding: 0;
+}
+
+.App {
+	height: 100%;
+}
+
+.outer-container {
+	height: 100%;
+	position: relative;
+}
+
+.page-wrap {
+	height: 100%;
 }
 
 .wine-list {
