@@ -5,6 +5,7 @@ import Variables from './utils/variables';
 // import DataHandle from './utils/data_handle';
 import WineList from './components/wine_list';
 // import WineDetail from './components/wine_detail';
+import TopNavbar from './components/top-navbar';
 
 class App extends Component {
 
@@ -81,6 +82,7 @@ class App extends Component {
       	{/*<WineDetail
       		wine={this.state.selectedWine}
       		handleModal={this.state.show} />*/}
+      	<TopNavbar />
         <WineList
         	onWineSelect={selectedWine => this.handleShow(selectedWine)}
         	wines={this.state.wines} />
