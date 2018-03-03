@@ -4,7 +4,8 @@ import { Modal, Button } from 'react-bootstrap';
 import Variables from './utils/variables';
 // import DataHandle from './utils/data_handle';
 import WineList from './components/wine_list';
-import SideMenu from './components/side-menu';
+import MainHeader from './components/main_header';
+import SideMenu from './components/side_menu';
 // import WineDetail from './components/wine_detail';
 
 class App extends Component {
@@ -84,6 +85,7 @@ class App extends Component {
 	      		wine={this.state.selectedWine}
 	      		handleModal={this.state.show} />*/}
 	      	<SideMenu />
+	      	<MainHeader />
 	      	<main className="page-wrap">
 		        <WineList
 		        	onWineSelect={selectedWine => this.handleShow(selectedWine)}
