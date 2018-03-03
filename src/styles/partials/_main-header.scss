@@ -1,0 +1,36 @@
+header {
+	width: 100%;
+	min-height: 450px;
+	box-sizing: border-box;
+
+	background-color: #93e5f2;
+
+	.top-bar {
+		display: block;
+		width: 100%;
+		position: fixed;
+		top: 0px;
+		z-index: 900;
+
+		padding: 20px;
+		background-color: transparent;
+
+		transition: all 0.3s;
+
+		h1 {
+			color: #e6efec;
+			font-size: 48px;
+
+			transition: 0.3s;
+		}
+
+		&.sticky {
+			background-color: #500009;
+			padding: 8px;
+
+			h1 {
+				font-size: 32px;
+			}
+		}
+	}
+}

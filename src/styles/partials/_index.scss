@@ -1,8 +1,5 @@
 body {
 	height: 100%;
-	background-image: url(../../images/light_wood.png);
-	background-repeat: repeat;
-	background-color: #efefef;
   	margin: 0;
   	padding: 0;
 }
@@ -18,10 +15,16 @@ body {
 
 .page-wrap {
 	height: 100%;
+	background-image: url(../../images/light_wood.png);
+	background-repeat: repeat;
+	background-attachment: fixed;
+	background-color: #efefef;
 }
 
 .wine-list {
 	width: 100%;
+	position: relative;
+	top: -60px;
 	margin: 0 auto;
 
 	@media only screen and (min-width: 768px) {
@@ -34,37 +37,5 @@ body {
 
 	@media only screen and (min-width: 1200px) {
 		width: 1192px; /* 4 columns */
-	}
-}
-
-.wine-item {
-	width: 100%;
-	background-color: transparent;
-	padding: 10px;
-
-	@media only screen and (min-width: 768px) {
-		width: 381px; /* 2 columns */
-	}
-
-	@media only screen and (min-width: 992px) {
-		width: 328px; /* 3 columns */
-	}
-
-	@media only screen and (min-width: 1200px) {
-		width: 298px; /* 4 columns */
-	}
-
-	.thumbnail {
-		text-align: center;
-		margin-bottom: 0px;
-	}
-
-	.thumbnail-img {
-		border: 6px solid #fff;
-		border-radius: 6px;
-
-		&.item-Red {
-			border-color: #BF2626;
-		}
 	}
 }

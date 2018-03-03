@@ -23,16 +23,19 @@
 		.sm-menu {
 			height: 100%;
 			overflow: auto;
-			background-color: #373a47;
+			background-color: #1e282a;
 
 			color: #ddd;
 		}
 	}
 
 	.sm-button {
-		position: absolute;
-		top: opx;
+		position: fixed;
+		top: 0px;
 		right: 0px;
+		z-index: 1000;
+
+		a { color: #fff; }
 	}
 
 	&.sm-open {

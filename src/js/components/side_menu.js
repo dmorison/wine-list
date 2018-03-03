@@ -24,11 +24,11 @@ class SideMenu extends Component {
 	}
 
 	render() {
-		const openMenu = this.state.smOpen ? 'sm-open' : null;
+		const openMenu = this.state.smOpen ? 'sm-open' : '';
 
 		return (
 			<div className={`side-menu ${openMenu}`}>
-				<div className="sm-overlay"></div>
+				<div className="sm-overlay" onClick={this.sideMenuClose}></div>
 				<div className="menu-wrap">
 					<div className="sm-menu">
 						<a onClick={this.sideMenuClose}>close</a>

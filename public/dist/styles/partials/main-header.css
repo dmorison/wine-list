@@ -1,0 +1,9 @@
+header {
+  width: 100%;
+  min-height: 450px;
+  box-sizing: border-box;
+  background-color: #f58546; }
+  header .top-bar {
+    background-color: #310e1a; }
+    header .top-bar h1 {
+      color: #eee; }
