@@ -33,8 +33,10 @@ class MainHeader extends Component {
 
 		return (
 			<header>
-				<div className={`top-bar ${sticky}`}>
-					<h1>Wine Cellar</h1>
+				<div className="header-bg">
+					<div className={`top-bar ${sticky}`}>
+						<h1>Wine Cellar</h1>
+					</div>
 				</div>
 			</header>
 		);

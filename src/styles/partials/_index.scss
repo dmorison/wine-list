@@ -11,14 +11,15 @@ body {
 .outer-container {
 	height: 100%;
 	position: relative;
-}
 
-.page-wrap {
-	height: 100%;
 	background-image: url(../../images/light_wood.png);
 	background-repeat: repeat;
 	background-attachment: fixed;
 	background-color: #efefef;
+}
+
+.page-wrap {
+	height: 100%;
 }
 
 .wine-list {
@@ -29,13 +30,20 @@ body {
 
 	@media only screen and (min-width: 768px) {
 		width: 762px; /* 2 columns */
+		top: -72px;
 	}
 
 	@media only screen and (min-width: 992px) {
 		width: 984px; /* 3 columns */
+		top: -84px;
 	}
 
 	@media only screen and (min-width: 1200px) {
 		width: 1192px; /* 4 columns */
+		top: -94px;
+	}
+
+	@media only screen and (min-width: 1514px) {
+		width: 1510px; /* 5 columns */
 	}
 }
