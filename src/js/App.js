@@ -60,7 +60,7 @@ class App extends Component {
   	if (this.state.selectedWine) {
   		activeWine = (
   			<Modal show={this.state.show} onHide={this.handleClose}>
-					<img src={`./${this.state.selectedWine[14]}.png`} width="120" height="120" />
+					<img src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${this.state.selectedWine[14]}.jpg`} width="120" />
 					<ul>
 						<li>Type: {this.state.selectedWine[0]}</li>
 						<li>{this.state.selectedWine[1]} - {this.state.selectedWine[2]}</li>

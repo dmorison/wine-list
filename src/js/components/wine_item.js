@@ -7,12 +7,12 @@ const WineItem = ({wine, onWineSelect}) => {
 	return (
 		<div className="wine-item">
 			<a onClick={() => onWineSelect(wine)}>
-				<div className="thumbnail">
+				<div className={`thumbnail type-${wine[0]}`}>
 					<div className="caption">
 						<p>{wine[1]}</p>
 						<h3>{wine[2]}<br/>{wine[5]}</h3>
 					</div>
-					<img className={`thumbnail-img item-${wine[0]}`} src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${wine[14]}.jpg`} width="70" />
+					<img className="thumbnail-img" src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${wine[14]}.jpg`} />
 					<div className="caption">
 						<p>{wine[4]}<br/>{wine[3]}</p>
 						<p>{wine[6]}</p>

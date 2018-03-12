@@ -22,18 +22,33 @@
 	.thumbnail {
 		text-align: center;
 		margin-bottom: 0px;
+
+		&:hover {
+			cursor: pointer;
+			background-color: #ddd;
+		}
+
+		&:after {
+			display: block;
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			content: '';
+
+			position: absolute;
+			bottom: 20px;
+			right: 20px;
+		}
+
+		&.type-Red:after { background-color: #b10015; }
+		&.type-White:after,
+		&.type-Sparkling:after { background-color: #fdce66; }
 	}
 
 	.thumbnail-img {
-		border: 6px solid #fff;
+		width: 86px;
+		height: auto;
+		border: 6px solid #420c1a;
 		border-radius: 6px;
-
-		&.item-Red {
-			border-color: #b10015;
-		}
-
-		&.item-White {
-			border-color: #fdce66;
-		}
 	}
 }
