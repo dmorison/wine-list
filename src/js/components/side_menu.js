@@ -31,7 +31,10 @@ class SideMenu extends Component {
 				<div className="sm-overlay" onClick={this.sideMenuClose}></div>
 				<div className="menu-wrap">
 					<div className="sm-menu">
-						<a onClick={this.sideMenuClose}>close</a>
+						<a className="sm-button-close" onClick={this.sideMenuClose}>
+							<span className="cross-one"></span>
+							<span className="cross-two"></span>
+						</a>
 						<br /><br />
 						<p>The dog and the cat</p><br /><br />
 						<p>The dog and the cat</p><br /><br />
@@ -50,7 +53,11 @@ class SideMenu extends Component {
 						<p>The dog and the cat</p><br /><br />
 					</div>
 				</div>
-				<div className="sm-button"><a onClick={this.sideMenuOpen}>open</a></div>
+				<div className="sm-button-open" onClick={this.sideMenuOpen}>
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
 			</div>
 		);
 	}

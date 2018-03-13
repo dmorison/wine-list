@@ -22,27 +22,18 @@
 	.thumbnail {
 		text-align: center;
 		margin-bottom: 0px;
+		border: 0px;
+		border-top: 6px solid #fff;
+		transition: all .4s ease-in-out;
 
 		&:hover {
 			cursor: pointer;
-			background-color: #ddd;
+			background-color: #96a9ae;
 		}
 
-		&:after {
-			display: block;
-			width: 20px;
-			height: 20px;
-			border-radius: 50%;
-			content: '';
-
-			position: absolute;
-			bottom: 20px;
-			right: 20px;
-		}
-
-		&.type-Red:after { background-color: #b10015; }
-		&.type-White:after,
-		&.type-Sparkling:after { background-color: #fdce66; }
+		&.type-Red { border-top-color: #b10015; }
+		&.type-White,
+		&.type-Sparkling { border-top-color: #fdce66; }
 	}
 
 	.thumbnail-img {
@@ -51,4 +42,5 @@
 		border: 6px solid #420c1a;
 		border-radius: 6px;
 	}
+
 }

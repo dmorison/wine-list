@@ -25,17 +25,56 @@
 			overflow: auto;
 			background-color: #1e282a;
 
-			color: #ddd;
+			color: #e6efec;
 		}
 	}
 
-	.sm-button {
+	.sm-button-close {
+		display: block;
+		width: 30px;
+		height: 30px;
+		position: relative;
+		padding-top: 12px;
+		top: 5px;
+		left: 5px;
+		transform: rotate(45deg);
+
+		&:hover { cursor: pointer; }
+
+		span {
+			display: block;
+			background-color: #e6efec;
+
+			&.cross-one {
+				width: 100%;
+				height: 5px;
+			}
+			&.cross-two {
+				width: 5px;
+				height: 30px;
+				position: absolute;
+				top: 0px;
+				left: 12px;
+			}
+		}
+	}
+
+	.sm-button-open {
+		width: 33px;
 		position: fixed;
-		top: 0px;
-		right: 0px;
+		top: 13px;
+		right: 13px;
 		z-index: 1000;
 
-		a { color: #fff; }
+		&:hover { cursor: pointer; }
+
+		span {
+			display: block;
+			width: 100%;
+			height: 5px;
+			background-color: #e6efec;
+			margin-bottom: 5px;
+		}
 	}
 
 	&.sm-open {
