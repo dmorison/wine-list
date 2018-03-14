@@ -25,6 +25,7 @@ class SideMenu extends Component {
 
 	render() {
 		const openMenu = this.state.smOpen ? 'sm-open' : '';
+		const sticky = !this.props.pagePosition ? 'sticky' : '';
 
 		return (
 			<div className={`side-menu ${openMenu}`}>
@@ -53,7 +54,7 @@ class SideMenu extends Component {
 						<p>The dog and the cat</p><br /><br />
 					</div>
 				</div>
-				<div className="sm-button-open" onClick={this.sideMenuOpen}>
+				<div className={`sm-button-open ${sticky}`} onClick={this.sideMenuOpen}>
 					<span></span>
 					<span></span>
 					<span></span>

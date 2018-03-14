@@ -15,11 +15,13 @@ class App extends Component {
 
 		this.handleShow = this.handleShow.bind(this);
 		this.handleClose = this.handleClose.bind(this);
+		this.handleScroll = this.handleScroll.bind(this);
 
 		this.state = {
 			wines: [],
 			selectedWine: null,
-			show: false
+			show: false,
+			topOfPage: true
 		};
 
 		this.getSheetsData();
@@ -44,6 +46,22 @@ class App extends Component {
 			});
 	}
 
+	componentDidMount() {
+		window.addEventListener('scroll', this.handleScroll);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.handleScroll);
+	}
+
+	handleScroll(event) {
+		if (window.pageYOffset || document.body.scrollTop > 1) {
+			this.setState({ topOfPage: false });
+		} else {
+			this.setState({ topOfPage: true });
+		}
+	}
+
 	handleClose() {
 		this.setState({ show: false });
 	}
@@ -57,6 +75,12 @@ class App extends Component {
 
   render() {
   	let activeWine = null;
+  	let grapes = null;
+
+  	if (this.state.selectedWine && this.state.selectedWine[7] !== '') {
+  		grapes = <li>{this.state.selectedWine[7]}</li>;
+  	}
+
   	if (this.state.selectedWine) {
   		activeWine = (
   			<Modal show={this.state.show} onHide={this.handleClose}>
@@ -71,13 +95,30 @@ class App extends Component {
 						<ul>
 							<li><strong>{this.state.selectedWine[4]}, {this.state.selectedWine[3]}</strong></li>
 							<li><strong>{this.state.selectedWine[6]}</strong></li>
-							{this.state.selectedWine[7] !== '' ? <li>this.state.selectedWine[7]</li> : null}
-							<li>Style: {this.state.selectedWine[9]}</li>
+							{grapes}
+							<li>{this.state.selectedWine[9]}</li>
 							<li>Rating: {this.state.selectedWine[8]}</li>
-							<li>Purchased from {this.state.selectedWine[11]} on {this.state.selectedWine[10]}</li>
-							<li>Price: {this.state.selectedWine[12]}</li>
-							<li>Stock: {this.state.selectedWine[13]}</li>
 						</ul>
+						<table>
+							<tbody>
+								<tr>
+									<td>Purchased:</td>
+									<td>{this.state.selectedWine[11]}</td>
+								</tr>
+								<tr>
+									<td>Price:</td>
+									<td>{this.state.selectedWine[12]}</td>
+								</tr>
+								<tr>
+									<td>Added:</td>
+									<td>{this.state.selectedWine[10]}</td>
+								</tr>
+								<tr>
+									<td>Current stock:</td>
+									<td>{this.state.selectedWine[13]}</td>
+								</tr>
+							</tbody>
+						</table>
 						<Button onClick={this.handleClose}>Close</Button>
 					</div>
 				</Modal>
@@ -90,8 +131,8 @@ class App extends Component {
 	      	{/*<WineDetail
 	      		wine={this.state.selectedWine}
 	      		handleModal={this.state.show} />*/}
-	      	<SideMenu />
-	      	<MainHeader />
+	      	<SideMenu pagePosition={this.state.topOfPage} />
+	      	<MainHeader pagePosition={this.state.topOfPage} />
 	      	<main className="page-wrap">
 		        <WineList
 		        	onWineSelect={selectedWine => this.handleShow(selectedWine)}
