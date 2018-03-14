@@ -60,20 +60,26 @@ class App extends Component {
   	if (this.state.selectedWine) {
   		activeWine = (
   			<Modal show={this.state.show} onHide={this.handleClose}>
-					<img src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${this.state.selectedWine[14]}.jpg`} width="120" />
-					<ul>
-						<li>Type: {this.state.selectedWine[0]}</li>
-						<li>{this.state.selectedWine[1]} - {this.state.selectedWine[2]}</li>
-						<li>{this.state.selectedWine[4]}, {this.state.selectedWine[3]}</li>
-						<li>{this.state.selectedWine[5]}</li>
-						<li>{this.state.selectedWine[6]}{this.state.selectedWine[7] !== 'null' ? ': ' + this.state.selectedWine[7] : ''}</li>
-						<li>Style: {this.state.selectedWine[9]}</li>
-						<li>Rating: {this.state.selectedWine[8]}</li>
-						<li>Purchased from {this.state.selectedWine[11]} on {this.state.selectedWine[10]}</li>
-						<li>Price: {this.state.selectedWine[12]}</li>
-						<li>Stock: {this.state.selectedWine[13]}</li>
-					</ul>
-					<Button onClick={this.handleClose}>Close</Button>
+  				<div className={`map-area type-${this.state.selectedWine[0]}`}></div>
+  				<div className="modal-inner">
+						<img src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${this.state.selectedWine[14]}.jpg`} width="120" />
+						<div>
+							<h4>{this.state.selectedWine[1]}</h4>
+							<h3>{this.state.selectedWine[2]}<br />{this.state.selectedWine[5]}</h3>
+						</div>
+						
+						<ul>
+							<li><strong>{this.state.selectedWine[4]}, {this.state.selectedWine[3]}</strong></li>
+							<li><strong>{this.state.selectedWine[6]}</strong></li>
+							{this.state.selectedWine[7] !== '' ? <li>this.state.selectedWine[7]</li> : null}
+							<li>Style: {this.state.selectedWine[9]}</li>
+							<li>Rating: {this.state.selectedWine[8]}</li>
+							<li>Purchased from {this.state.selectedWine[11]} on {this.state.selectedWine[10]}</li>
+							<li>Price: {this.state.selectedWine[12]}</li>
+							<li>Stock: {this.state.selectedWine[13]}</li>
+						</ul>
+						<Button onClick={this.handleClose}>Close</Button>
+					</div>
 				</Modal>
   		);
   	}
