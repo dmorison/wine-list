@@ -16,21 +16,32 @@ class App extends Component {
 		this.handleShow = this.handleShow.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
+		this.handlePageNumber = this.handlePageNumber.bind(this);
 
 		this.state = {
 			wines: [],
 			selectedWine: null,
 			show: false,
-			topOfPage: true
+			topOfPage: true,
+			currPage: 10,
+			currRange: 'A1:O10'
 		};
 
-		this.getSheetsData();
+		this.getSheetsData(this.state.currRange);
 	}
 
-	getSheetsData() {
+	handlePageNumber() {
+		let loadWines = this.state.currPage + 5;
+		let newRange = 'A1:O' + loadWines.toString();
+		this.getSheetsData(newRange);
+		this.setState({ currPage: loadWines });
+	}
+
+	getSheetsData(range) {
 		const apiKey = Variables().API_KEY;
 		const sheetId = Variables().Sheet_Id;
-		const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1?key=${apiKey}`;
+		const upto = range;
+		const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!${upto}?key=${apiKey}`;
 		
 		axios.get(apiV4)
 			.then((response) => {
@@ -84,7 +95,12 @@ class App extends Component {
   	if (this.state.selectedWine) {
   		activeWine = (
   			<Modal show={this.state.show} onHide={this.handleClose}>
-  				<div className={`map-area type-${this.state.selectedWine[0]}`}></div>
+  				<div className={`map-area type-${this.state.selectedWine[0]}`}>
+  					<a className="sm-button-close" onClick={this.handleClose}>
+							<span className="cross-one"></span>
+							<span className="cross-two"></span>
+						</a>
+  				</div>
   				<div className="modal-inner">
 						<img src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${this.state.selectedWine[14]}.jpg`} width="120" />
 						<div>
@@ -119,7 +135,6 @@ class App extends Component {
 								</tr>
 							</tbody>
 						</table>
-						<Button onClick={this.handleClose}>Close</Button>
 					</div>
 				</Modal>
   		);
@@ -137,6 +152,7 @@ class App extends Component {
 		        <WineList
 		        	onWineSelect={selectedWine => this.handleShow(selectedWine)}
 		        	wines={this.state.wines} />
+		        	<button className="load-more-btn" onClick={this.handlePageNumber}>Load more</button>
 		        {/*<button onClick={this.handleClick}>Get Wines</button>*/}
 		        {activeWine}
 		      </main>

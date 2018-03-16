@@ -36,22 +36,37 @@ class SideMenu extends Component {
 							<span className="cross-one"></span>
 							<span className="cross-two"></span>
 						</a>
-						<br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
-						<p>The dog and the cat</p><br /><br />
+						<br />
+						<p><strong>Sort</strong></p>
+						<p>Price:</p>
+						<ul>
+							<li><a>High to low</a></li>
+							<li><a>Low to high</a></li>
+						</ul>
+						<p>Added:</p>
+						<ul>
+							<li><a>Oldest to newest</a></li>
+							<li><a>Newest to oldestt</a></li>
+						</ul>
+						<p><strong>Filter</strong></p>
+						<p>Country:</p>
+						<ul>
+							<li><a>South Africa</a></li>
+							<li><a>France</a></li>
+							<li><a>Spain</a></li>
+							<li><a>Italy</a></li>
+							<li><a>Australia</a></li>
+							<li><a>Other</a></li>
+						</ul>
+						<p>Type:</p>
+						<ul>
+							<li><a>Blend</a></li>
+							<li><a>Shiraz</a></li>
+							<li><a>Cabernet Sauvignon</a></li>
+							<li><a>Merlot</a></li>
+							<li><a>Cabernet franc</a></li>
+							<li><a>Malbec</a></li>
+						</ul>
 					</div>
 				</div>
 				<div className={`sm-button-open ${sticky}`} onClick={this.sideMenuOpen}>

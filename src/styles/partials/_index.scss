@@ -47,3 +47,23 @@ body {
 		width: 1510px; /* 5 columns */
 	}
 }
+
+.load-more-btn {
+	color: #420c1a;
+	font-weight: bold;
+	display: block;
+	padding: 10px 16px;
+	margin: 20px auto;
+	background: transparent;
+	border: 2px solid #420c1a;
+	transition: all .4s ease-in-out;
+
+	position: relative;
+	top: -40px;
+
+	&:hover {
+		color: #e6efec;
+		background-color: #420c1a;
+		border-color: #e6efec;
+	}
+}
