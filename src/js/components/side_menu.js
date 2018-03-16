@@ -40,7 +40,7 @@ class SideMenu extends Component {
 						<p><strong>Sort</strong></p>
 						<p>Price:</p>
 						<ul>
-							<li><a>High to low</a></li>
+							<li><a onClick={() => this.props.onSortSelect('highlow')}>High to low</a></li>
 							<li><a>Low to high</a></li>
 						</ul>
 						<p>Added:</p>
