@@ -89,7 +89,9 @@ class App extends Component {
   	let grapes = null;
 
   	if (this.state.selectedWine && this.state.selectedWine[7] !== '') {
-  		grapes = <li>{this.state.selectedWine[7]}</li>;
+  		grapes = this.state.selectedWine[7];
+  	} else if (this.state.selectedWine) {
+  		grapes = this.state.selectedWine[6];
   	}
 
   	if (this.state.selectedWine) {
@@ -102,19 +104,20 @@ class App extends Component {
 						</a>
   				</div>
   				<div className="modal-inner">
-						<img src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${this.state.selectedWine[14]}.jpg`} width="120" />
-						<div>
-							<h4>{this.state.selectedWine[1]}</h4>
-							<h3>{this.state.selectedWine[2]}<br />{this.state.selectedWine[5]}</h3>
+  					<div className="modal-inner-head clearfix">
+							<img src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${this.state.selectedWine[14]}.jpg`} width="120" />
+							<div>
+								<p><strong>Rating: <span>{this.state.selectedWine[8]}</span></strong></p>
+								<p><strong>Current stock: <span>{this.state.selectedWine[13]}</span></strong></p>
+							</div>
 						</div>
 						
-						<ul>
-							<li><strong>{this.state.selectedWine[4]}, {this.state.selectedWine[3]}</strong></li>
-							<li><strong>{this.state.selectedWine[6]}</strong></li>
-							{grapes}
-							<li>{this.state.selectedWine[9]}</li>
-							<li>Rating: {this.state.selectedWine[8]}</li>
-						</ul>
+						<h4>{this.state.selectedWine[1]}</h4>
+						<h3>{this.state.selectedWine[2]}<br />{this.state.selectedWine[5]}</h3>
+						<p><strong>{this.state.selectedWine[4]}, {this.state.selectedWine[3]}</strong></p>
+						<p className="margin-bottom">{grapes}</p>
+						<p>{this.state.selectedWine[9]}</p>
+
 						<table>
 							<tbody>
 								<tr>
@@ -126,12 +129,8 @@ class App extends Component {
 									<td>{this.state.selectedWine[12]}</td>
 								</tr>
 								<tr>
-									<td>Added:</td>
+									<td>Date:</td>
 									<td>{this.state.selectedWine[10]}</td>
-								</tr>
-								<tr>
-									<td>Current stock:</td>
-									<td>{this.state.selectedWine[13]}</td>
 								</tr>
 							</tbody>
 						</table>
