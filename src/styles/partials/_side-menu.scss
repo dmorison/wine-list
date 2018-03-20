@@ -27,6 +27,27 @@
 
 			color: #e6efec;
 			padding: 16px;
+
+			p.margin-bottom { font-size: 22px; }
+
+			ul {
+				padding-left: 20px;
+
+				&.last-ul { margin-bottom: 20px; }
+
+				li {
+					list-style-type: none;
+
+					a {
+						color: #bbb;
+
+						&:hover {
+							color: #e6efec;
+							cursor: pointer;
+						}
+					}
+				}
+			}
 		}
 	}
 

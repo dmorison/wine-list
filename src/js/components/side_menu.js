@@ -37,19 +37,19 @@ class SideMenu extends Component {
 							<span className="cross-two"></span>
 						</a>
 						<br />
-						<p><strong>Sort</strong></p>
-						<p>Price:</p>
+						<p className="margin-bottom"><strong>Sort</strong></p>
+						<p><strong>Price:</strong></p>
 						<ul>
 							<li><a>High to low</a></li>
 							<li><a>Low to high</a></li>
 						</ul>
-						<p>Added:</p>
-						<ul>
+						<p><strong>Added:</strong></p>
+						<ul className="last-ul">
 							<li><a>Oldest to newest</a></li>
 							<li><a>Newest to oldestt</a></li>
 						</ul>
-						<p><strong>Filter</strong></p>
-						<p>Country:</p>
+						<p className="margin-bottom"><strong>Filter</strong></p>
+						<p><strong>Country:</strong></p>
 						<ul>
 							<li><a>South Africa</a></li>
 							<li><a>France</a></li>
@@ -58,7 +58,7 @@ class SideMenu extends Component {
 							<li><a>Australia</a></li>
 							<li><a>Other</a></li>
 						</ul>
-						<p>Type:</p>
+						<p><strong>Type:</strong></p>
 						<ul>
 							<li><a>Blend</a></li>
 							<li><a>Shiraz</a></li>
