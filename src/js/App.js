@@ -16,6 +16,7 @@ class App extends Component {
 		this.handleShow = this.handleShow.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
+		this.handleSort = this.handleSort.bind(this);
 		this.handlePageNumber = this.handlePageNumber.bind(this);
 
 		this.state = {
@@ -84,6 +85,11 @@ class App extends Component {
 		});
 	}
 
+	handleSort(sortBy) {
+		console.log(sortBy);
+		console.log(this.state.wines);
+	}
+
   render() {
   	let activeWine = null;
   	let grapes = null;
@@ -145,12 +151,16 @@ class App extends Component {
 	      	{/*<WineDetail
 	      		wine={this.state.selectedWine}
 	      		handleModal={this.state.show} />*/}
-	      	<SideMenu pagePosition={this.state.topOfPage} />
+	      	<SideMenu
+	      		pagePosition={this.state.topOfPage}
+	      		onSortSelect={sortParam => this.handleSort(sortParam)}
+	      	/>
 	      	<MainHeader pagePosition={this.state.topOfPage} />
 	      	<main className="page-wrap">
 		        <WineList
 		        	onWineSelect={selectedWine => this.handleShow(selectedWine)}
-		        	wines={this.state.wines} />
+		        	wines={this.state.wines}
+		        />
 		        	<button className="load-more-btn" onClick={this.handlePageNumber}>Load more</button>
 		        {/*<button onClick={this.handleClick}>Get Wines</button>*/}
 		        {activeWine}
