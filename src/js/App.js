@@ -25,7 +25,8 @@ class App extends Component {
 			show: false,
 			topOfPage: true,
 			currPage: 10,
-			currRange: 'A1:O10'
+			currRange: '!A1:O10',
+			filterParam: null,
 		};
 
 		this.getSheetsData(this.state.currRange);
@@ -33,25 +34,43 @@ class App extends Component {
 
 	handlePageNumber() {
 		let loadWines = this.state.currPage + 5;
-		let newRange = 'A1:O' + loadWines.toString();
+		let newRange = '!A1:O' + loadWines.toString();
 		this.getSheetsData(newRange);
 		this.setState({ currPage: loadWines });
 	}
 
+	setWines(wineArray) {
+		if (!this.state.filterParam) {
+			this.setState({
+				wines: wineArray,
+				selectedWine: wineArray[1]
+			});
+		} else {
+			let filteredWines = wineArray.filter(wine => wine[3] === this.state.filterParam);
+			this.setState({
+				wines: filteredWines,
+				selectedWine: filteredWines[1]
+			});
+		}
+	}
+
 	getSheetsData(range) {
+		const queryRange = range ? range : '';
 		const apiKey = Variables().API_KEY;
 		const sheetId = Variables().Sheet_Id;
-		const upto = range;
-		const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!${upto}?key=${apiKey}`;
+		const dataRange = queryRange;
+		const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1${dataRange}?key=${apiKey}`;
 		
 		axios.get(apiV4)
 			.then((response) => {
 				// console.log(response);
 				const wines = response.data.values;
-				this.setState({
-					wines: wines,
-					selectedWine: wines[1]
-				});
+				console.log(response.data.values);
+				this.setWines(wines);
+				// this.setState({
+				// 	wines: wines,
+				// 	selectedWine: wines[1]
+				// });
 			})
 			.catch((error) => {
 				console.log(error);
@@ -88,6 +107,8 @@ class App extends Component {
 	handleSort(sortBy) {
 		console.log(sortBy);
 		console.log(this.state.wines);
+		this.setState({ filterParam: sortBy });
+		this.getSheetsData();
 	}
 
   render() {

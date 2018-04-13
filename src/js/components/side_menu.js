@@ -51,7 +51,7 @@ class SideMenu extends Component {
 						<p className="margin-bottom"><strong>Filter</strong></p>
 						<p><strong>Country:</strong></p>
 						<ul>
-							<li><a>South Africa</a></li>
+							<li><a onClick={() => this.props.onSortSelect('South Africa')}>South Africa</a></li>
 							<li><a>France</a></li>
 							<li><a>Spain</a></li>
 							<li><a>Italy</a></li>
