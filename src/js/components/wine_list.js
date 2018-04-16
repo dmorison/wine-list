@@ -10,7 +10,6 @@ import WineItem from './wine_item';
 const WineList = (props) => {
 
 	const wineList = props.wines.map((wine, index) => {
-		if (index < 1) { return; }
 		return (
 			<WineItem
 				onWineSelect={props.onWineSelect}

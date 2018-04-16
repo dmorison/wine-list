@@ -16,7 +16,7 @@ class App extends Component {
 		this.handleShow = this.handleShow.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
-		this.handleSort = this.handleSort.bind(this);
+		this.handleFilter = this.handleFilter.bind(this);
 		this.handlePageNumber = this.handlePageNumber.bind(this);
 
 		this.state = {
@@ -26,7 +26,8 @@ class App extends Component {
 			topOfPage: true,
 			currPage: 10,
 			currRange: '!A1:O10',
-			filterParam: null,
+			appInitFilter: null,
+			appFilterParams: null,
 		};
 
 		this.getSheetsData(this.state.currRange);
@@ -39,21 +40,32 @@ class App extends Component {
 		this.setState({ currPage: loadWines });
 	}
 
+	// set what wines to show on app state
 	setWines(wineArray) {
-		if (!this.state.filterParam) {
+		if (!this.state.appInitFilter) {
 			this.setState({
 				wines: wineArray,
-				selectedWine: wineArray[1]
+				selectedWine: wineArray[0]
 			});
 		} else {
-			let filteredWines = wineArray.filter(wine => wine[3] === this.state.filterParam);
+			let filteredWines;
+			if (!this.state.appFilterParams) {
+				filteredWines = wineArray.filter(wine => wine[this.state.appInitFilter.filterCat] === this.state.appInitFilter.filterItem);
+			} else {
+				filteredWines = this.state.wines;
+				this.state.appFilterParams.forEach(item => {
+					filteredWines = filteredWines.filter(wine => wine[item.filterCat] === item.filterItem);
+				});
+			}
+
 			this.setState({
 				wines: filteredWines,
-				selectedWine: filteredWines[1]
+				selectedWine: filteredWines[0]
 			});
 		}
 	}
 
+	// main API call function
 	getSheetsData(range) {
 		const queryRange = range ? range : '';
 		const apiKey = Variables().API_KEY;
@@ -63,18 +75,31 @@ class App extends Component {
 		
 		axios.get(apiV4)
 			.then((response) => {
-				// console.log(response);
-				const wines = response.data.values;
-				console.log(response.data.values);
+				let wines = response.data.values;
+				wines.splice(0, 1);
 				this.setWines(wines);
-				// this.setState({
-				// 	wines: wines,
-				// 	selectedWine: wines[1]
-				// });
 			})
 			.catch((error) => {
 				console.log(error);
 			});
+	}
+
+	handleFilter(filterBy) {
+		if (!filterBy) {
+			this.getSheetsData('!A1:O10');
+			this.setState({
+				appInitFilter: null,
+				appFilterParams: null
+			});
+		} else {
+			if(!this.state.appInitFilter) {
+				this.setState({ appInitFilter: filterBy }, () => this.getSheetsData());
+			} else {
+				let filterParamsArray = this.state.appFilterParams ? this.state.appFilterParams : [];
+				filterParamsArray.push(filterBy);
+				this.setState({ appFilterParams: filterParamsArray }, () => this.setWines(this.state.wines));
+			}
+		}
 	}
 
 	componentDidMount() {
@@ -85,6 +110,7 @@ class App extends Component {
 		window.removeEventListener('scroll', this.handleScroll);
 	}
 
+	// handle the page position for sticky top menu
 	handleScroll(event) {
 		if (window.pageYOffset || document.body.scrollTop > 1) {
 			this.setState({ topOfPage: false });
@@ -102,13 +128,6 @@ class App extends Component {
 			selectedWine: wine,
 			show: true
 		});
-	}
-
-	handleSort(sortBy) {
-		console.log(sortBy);
-		console.log(this.state.wines);
-		this.setState({ filterParam: sortBy });
-		this.getSheetsData();
 	}
 
   render() {
@@ -174,7 +193,7 @@ class App extends Component {
 	      		handleModal={this.state.show} />*/}
 	      	<SideMenu
 	      		pagePosition={this.state.topOfPage}
-	      		onSortSelect={sortParam => this.handleSort(sortParam)}
+	      		onFilterSelect={filterParam => this.handleFilter(filterParam)}
 	      	/>
 	      	<MainHeader pagePosition={this.state.topOfPage} />
 	      	<main className="page-wrap">

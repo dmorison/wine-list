@@ -7,9 +7,10 @@ class SideMenu extends Component {
 
 		this.sideMenuClose = this.sideMenuClose.bind(this);
 		this.sideMenuOpen = this.sideMenuOpen.bind(this);
+		this.handleFilterSelect = this.handleFilterSelect.bind(this);
 
 		this.state = {
-			smOpen: false
+			smOpen: false,
 		}
 	}
 
@@ -21,6 +22,20 @@ class SideMenu extends Component {
 	sideMenuOpen() {
 		this.setState({ smOpen: true });
 		document.body.style.overflow = "hidden";
+	}
+
+	handleFilterSelect(filterBy) {
+		let filterObj;
+		if (filterBy) {
+			filterObj = {
+				filterCat: filterBy[0],
+				filterItem: filterBy[1]
+			}
+		} else {
+			filterObj = null;
+		}
+
+		this.props.onFilterSelect(filterObj);
 	}
 
 	render() {
@@ -37,6 +52,7 @@ class SideMenu extends Component {
 							<span className="cross-two"></span>
 						</a>
 						<br />
+						<p><a onClick={() => this.handleFilterSelect(null)}>CLEAR</a></p>
 						<p className="margin-bottom"><strong>Sort</strong></p>
 						<p><strong>Price:</strong></p>
 						<ul>
@@ -51,21 +67,22 @@ class SideMenu extends Component {
 						<p className="margin-bottom"><strong>Filter</strong></p>
 						<p><strong>Country:</strong></p>
 						<ul>
-							<li><a onClick={() => this.props.onSortSelect('South Africa')}>South Africa</a></li>
-							<li><a>France</a></li>
-							<li><a>Spain</a></li>
-							<li><a>Italy</a></li>
-							<li><a>Australia</a></li>
-							<li><a>Other</a></li>
+							<li><a onClick={() => this.handleFilterSelect([3, 'South Africa'])}>South Africa</a></li>
+							<li><a onClick={() => this.handleFilterSelect([3, 'France'])}>France</a></li>
+							<li><a onClick={() => this.handleFilterSelect([3, 'Spain'])}>Spain</a></li>
+							<li><a onClick={() => this.handleFilterSelect([3, 'Italy'])}>Italy</a></li>
+							<li><a onClick={() => this.handleFilterSelect([3, 'Australia'])}>Australia</a></li>
+							<li><a onClick={() => this.handleFilterSelect([3, 'Other'])}>Other</a></li>
 						</ul>
 						<p><strong>Type:</strong></p>
 						<ul>
-							<li><a>Blend</a></li>
-							<li><a>Shiraz</a></li>
-							<li><a>Cabernet Sauvignon</a></li>
-							<li><a>Merlot</a></li>
-							<li><a>Cabernet franc</a></li>
-							<li><a>Malbec</a></li>
+							<li><a onClick={() => this.handleFilterSelect([6, 'Blend'])}>Blend</a></li>
+							<li><a onClick={() => this.handleFilterSelect([6, 'Shiraz'])}>Shiraz</a></li>
+							<li><a onClick={() => this.handleFilterSelect([6, 'Syrah'])}>Syrah</a></li>
+							<li><a onClick={() => this.handleFilterSelect([6, 'Cabernet Sauvignon'])}>Cabernet Sauvignon</a></li>
+							<li><a onClick={() => this.handleFilterSelect([6, 'Merlot'])}>Merlot</a></li>
+							<li><a onClick={() => this.handleFilterSelect([6, 'Cabernet Franc'])}>Cabernet Franc</a></li>
+							<li><a onClick={() => this.handleFilterSelect([6, 'Malbec'])}>Malbec</a></li>
 						</ul>
 					</div>
 				</div>
