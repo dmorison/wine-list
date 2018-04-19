@@ -26,8 +26,17 @@ class App extends Component {
 			topOfPage: true,
 			currPage: 10,
 			currRange: '!A1:O10',
-			appInitFilter: null,
-			appFilterParams: null,
+			numFilters: 0,
+			filterParams: {
+				country: {
+					catId: 3,
+					value: null
+				},
+				type: {
+					catId: 6,
+					value: null
+				}
+			}
 		};
 
 		this.getSheetsData(this.state.currRange);
@@ -42,21 +51,35 @@ class App extends Component {
 
 	// set what wines to show on app state
 	setWines(wineArray) {
-		if (!this.state.appInitFilter) {
+		if (this.state.numFilters === 0) {
+			console.log("there are no filters set");
 			this.setState({
 				wines: wineArray,
 				selectedWine: wineArray[0]
 			});
 		} else {
+			console.log(wineArray);
+			// let filterParamsArray = [];
 			let filteredWines;
-			if (!this.state.appFilterParams) {
-				filteredWines = wineArray.filter(wine => wine[this.state.appInitFilter.filterCat] === this.state.appInitFilter.filterItem);
-			} else {
-				filteredWines = this.state.wines;
-				this.state.appFilterParams.forEach(item => {
-					filteredWines = filteredWines.filter(wine => wine[item.filterCat] === item.filterItem);
-				});
-			}
+			let appFilterParams = this.state.filterParams;
+			Object.keys(appFilterParams).forEach(key => {
+				if (appFilterParams[key].value) {
+					console.log(appFilterParams[key].catId);
+					console.log(appFilterParams[key].value);
+					filteredWines = wineArray.filter(wine => wine[appFilterParams[key].catId] === appFilterParams[key].value);
+					// filterParamsArray.push([appFilterParams[key].catId, appFilterParams[key].value]);
+				}
+			});
+			console.log(filteredWines);
+
+			// if (!this.state.numFilters === 1) {
+			// 	filteredWines = wineArray.filter(wine => wine[this.state.appInitFilter.filterCat] === this.state.appInitFilter.filterItem);
+			// } else {
+			// 	filteredWines = this.state.wines;
+			// 	this.state.appFilterParams.forEach(item => {
+			// 		filteredWines = filteredWines.filter(wine => wine[item.filterCat] === item.filterItem);
+			// 	});
+			// }
 
 			this.setState({
 				wines: filteredWines,
@@ -86,19 +109,59 @@ class App extends Component {
 
 	handleFilter(filterBy) {
 		if (!filterBy) {
-			this.getSheetsData('!A1:O10');
-			this.setState({
-				appInitFilter: null,
-				appFilterParams: null
+			let appFilterParams = this.state.filterParams;
+			Object.keys(appFilterParams).forEach(key => {
+				console.log(key);
+				console.log(appFilterParams[key]);
+				appFilterParams[key].value = null;
 			});
+
+			console.log(appFilterParams);
+			this.setState({
+				filterParams: appFilterParams,
+				numFilters: 0
+			}, () => this.getSheetsData('!A1:010'));
 		} else {
-			if(!this.state.appInitFilter) {
-				this.setState({ appInitFilter: filterBy }, () => this.getSheetsData());
+			console.log(filterBy);
+			let filterCat = filterBy[0];
+			let filterValue = filterBy[1];
+
+			let appFilterParams = this.state.filterParams;
+			let numberFilters = this.state.numFilters;
+
+			if (filterValue === "default") {
+				appFilterParams[filterCat].value = null;
+				numberFilters--;
 			} else {
-				let filterParamsArray = this.state.appFilterParams ? this.state.appFilterParams : [];
-				filterParamsArray.push(filterBy);
-				this.setState({ appFilterParams: filterParamsArray }, () => this.setWines(this.state.wines));
+				appFilterParams[filterCat].value = filterValue;
+				numberFilters++;
 			}
+			console.log(numberFilters);
+			console.log(appFilterParams);
+
+			this.setState({
+				filterParams: appFilterParams,
+				numFilters: numberFilters
+			}, () => this.getSheetsData());
+
+
+
+			// this.getSheetsData();
+			// let appFilterParams = this.state.filterParams;
+			// Object.keys(appFilterParams).forEach(key => {
+			// 	console.log(key);
+			// 	console.log(appFilterParams[key]);
+			// });
+			
+
+			
+			// if(!this.state.appInitFilter) {
+			// 	this.setState({ appInitFilter: filterBy }, () => this.getSheetsData());
+			// } else {
+			// 	let filterParamsArray = this.state.appFilterParams ? this.state.appFilterParams : [];
+			// 	filterParamsArray.push(filterBy);
+			// 	this.setState({ appFilterParams: filterParamsArray }, () => this.setWines(this.state.wines));
+			// }
 		}
 	}
 

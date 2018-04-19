@@ -8,6 +8,7 @@ class SideMenu extends Component {
 		this.sideMenuClose = this.sideMenuClose.bind(this);
 		this.sideMenuOpen = this.sideMenuOpen.bind(this);
 		this.handleFilterSelect = this.handleFilterSelect.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 
 		this.state = {
 			smOpen: false,
@@ -38,6 +39,21 @@ class SideMenu extends Component {
 		this.props.onFilterSelect(filterObj);
 	}
 
+	handleChange(event) {
+		// console.log(event.target.value);
+		// console.log(event.target.id);
+		// let filterObj = {
+		// 	filterCat: parseInt(event.target.id),
+		// 	filterItem: event.target.value
+		// }
+		// this.props.onFilterSelect(filterObj);
+		if (event.target.id === "clear-filters") {
+			this.props.onFilterSelect(null);
+		} else {
+			this.props.onFilterSelect([event.target.id, event.target.value]);			
+		}
+	}
+
 	render() {
 		const openMenu = this.state.smOpen ? 'sm-open' : '';
 		const sticky = !this.props.pagePosition ? 'sticky' : '';
@@ -52,38 +68,48 @@ class SideMenu extends Component {
 							<span className="cross-two"></span>
 						</a>
 						<br />
-						<p><a onClick={() => this.handleFilterSelect(null)}>CLEAR</a></p>
-						<p className="margin-bottom"><strong>Sort</strong></p>
-						<p><strong>Price:</strong></p>
-						<ul>
-							<li><a onClick={() => this.props.onSortSelect('highlow')}>High to low</a></li>
-							<li><a>Low to high</a></li>
-						</ul>
-						<p><strong>Added:</strong></p>
-						<ul className="last-ul">
-							<li><a>Oldest to newest</a></li>
-							<li><a>Newest to oldestt</a></li>
-						</ul>
-						<p className="margin-bottom"><strong>Filter</strong></p>
-						<p><strong>Country:</strong></p>
-						<ul>
-							<li><a onClick={() => this.handleFilterSelect([3, 'South Africa'])}>South Africa</a></li>
-							<li><a onClick={() => this.handleFilterSelect([3, 'France'])}>France</a></li>
-							<li><a onClick={() => this.handleFilterSelect([3, 'Spain'])}>Spain</a></li>
-							<li><a onClick={() => this.handleFilterSelect([3, 'Italy'])}>Italy</a></li>
-							<li><a onClick={() => this.handleFilterSelect([3, 'Australia'])}>Australia</a></li>
-							<li><a onClick={() => this.handleFilterSelect([3, 'Other'])}>Other</a></li>
-						</ul>
-						<p><strong>Type:</strong></p>
-						<ul>
-							<li><a onClick={() => this.handleFilterSelect([6, 'Blend'])}>Blend</a></li>
-							<li><a onClick={() => this.handleFilterSelect([6, 'Shiraz'])}>Shiraz</a></li>
-							<li><a onClick={() => this.handleFilterSelect([6, 'Syrah'])}>Syrah</a></li>
-							<li><a onClick={() => this.handleFilterSelect([6, 'Cabernet Sauvignon'])}>Cabernet Sauvignon</a></li>
-							<li><a onClick={() => this.handleFilterSelect([6, 'Merlot'])}>Merlot</a></li>
-							<li><a onClick={() => this.handleFilterSelect([6, 'Cabernet Franc'])}>Cabernet Franc</a></li>
-							<li><a onClick={() => this.handleFilterSelect([6, 'Malbec'])}>Malbec</a></li>
-						</ul>
+						<form>
+							<button id="clear-filters" onClick={this.handleChange}>CLEAR</button>
+							
+							<p className="margin-bottom"><strong>Sort</strong></p>
+							<p><strong>Price:</strong></p>
+							<ul>
+								<li><a onClick={() => this.props.onSortSelect('highlow')}>High to low</a></li>
+								<li><a>Low to high</a></li>
+							</ul>
+							<p><strong>Added:</strong></p>
+							<ul className="last-ul">
+								<li><a>Oldest to newest</a></li>
+								<li><a>Newest to oldestt</a></li>
+							</ul>
+							<p className="margin-bottom"><strong>Filter</strong></p>
+							<label>
+								Country:
+								<select id="country" onChange={this.handleChange}>
+									<option value="default">Select a country</option>
+									<option value="South Africa">South Africa</option>
+									<option value="France">France</option>
+									<option value="Spain">Spain</option>
+									<option value="Italy">Italy</option>
+									<option value="Australia">Australia</option>
+									<option value="Other">Other</option>
+								</select>
+							</label>
+							
+							<label>
+								Type:
+								<select id="type" onChange={this.handleChange}>
+									<option value="default">Select a type</option>
+									<option value="Blend">Blend</option>
+									<option value="Shiraz">Shiraz</option>
+									<option value="Syrah">Syrah</option>
+									<option value="Cabernet Sauvignon">Cabernet Sauvignon</option>
+									<option value="Merlot">Merlot</option>
+									<option value="Cabernet Franc">Cabernet Franc</option>
+									<option value="Malbec">Malbec</option>
+								</select>
+							</label>
+						</form>
 					</div>
 				</div>
 				<div className={`sm-button-open ${sticky}`} onClick={this.sideMenuOpen}>
