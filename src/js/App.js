@@ -28,6 +28,10 @@ class App extends Component {
 			currRange: '!A1:O10',
 			numFilters: 0,
 			filterParams: {
+				stock: {
+					catId: 13,
+					value: null
+				},
 				country: {
 					catId: 3,
 					value: null
@@ -59,27 +63,29 @@ class App extends Component {
 			});
 		} else {
 			console.log(wineArray);
-			// let filterParamsArray = [];
-			let filteredWines;
+			let filteredWines = [];
 			let appFilterParams = this.state.filterParams;
 			Object.keys(appFilterParams).forEach(key => {
 				if (appFilterParams[key].value) {
+					console.log(key);
 					console.log(appFilterParams[key].catId);
 					console.log(appFilterParams[key].value);
-					filteredWines = wineArray.filter(wine => wine[appFilterParams[key].catId] === appFilterParams[key].value);
-					// filterParamsArray.push([appFilterParams[key].catId, appFilterParams[key].value]);
+					if (filteredWines.length < 1) {
+						if (key === "stock") {
+							if (appFilterParams[key].value === "true") {
+								filteredWines = wineArray.filter(wine => wine[appFilterParams[key].catId] > 0);
+							} else {
+								filteredWines = wineArray.filter(wine => wine[appFilterParams[key].catId] === 0);
+							}
+						} else {
+							filteredWines = wineArray.filter(wine => wine[appFilterParams[key].catId] === appFilterParams[key].value);
+						}
+					} else {
+						filteredWines = filteredWines.filter(wine => wine[appFilterParams[key].catId] === appFilterParams[key].value);
+					}
 				}
 			});
 			console.log(filteredWines);
-
-			// if (!this.state.numFilters === 1) {
-			// 	filteredWines = wineArray.filter(wine => wine[this.state.appInitFilter.filterCat] === this.state.appInitFilter.filterItem);
-			// } else {
-			// 	filteredWines = this.state.wines;
-			// 	this.state.appFilterParams.forEach(item => {
-			// 		filteredWines = filteredWines.filter(wine => wine[item.filterCat] === item.filterItem);
-			// 	});
-			// }
 
 			this.setState({
 				wines: filteredWines,
@@ -90,16 +96,23 @@ class App extends Component {
 
 	// main API call function
 	getSheetsData(range) {
-		const queryRange = range ? range : '';
+		let queryRange = range ? range : '';
 		const apiKey = Variables().API_KEY;
 		const sheetId = Variables().Sheet_Id;
-		const dataRange = queryRange;
+		let dataRange;
+		if (this.state.numFilters > 0) {
+			dataRange = queryRange;
+		} else {
+			dataRange = this.state.currRange;
+		}
 		const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1${dataRange}?key=${apiKey}`;
 		
 		axios.get(apiV4)
 			.then((response) => {
 				let wines = response.data.values;
-				wines.splice(0, 1);
+				let totals = wines[0];
+				console.log(totals);
+				wines.splice(0, 2);
 				this.setWines(wines);
 			})
 			.catch((error) => {
@@ -120,7 +133,7 @@ class App extends Component {
 			this.setState({
 				filterParams: appFilterParams,
 				numFilters: 0
-			}, () => this.getSheetsData('!A1:010'));
+			}, () => this.getSheetsData());
 		} else {
 			console.log(filterBy);
 			let filterCat = filterBy[0];
@@ -143,25 +156,6 @@ class App extends Component {
 				filterParams: appFilterParams,
 				numFilters: numberFilters
 			}, () => this.getSheetsData());
-
-
-
-			// this.getSheetsData();
-			// let appFilterParams = this.state.filterParams;
-			// Object.keys(appFilterParams).forEach(key => {
-			// 	console.log(key);
-			// 	console.log(appFilterParams[key]);
-			// });
-			
-
-			
-			// if(!this.state.appInitFilter) {
-			// 	this.setState({ appInitFilter: filterBy }, () => this.getSheetsData());
-			// } else {
-			// 	let filterParamsArray = this.state.appFilterParams ? this.state.appFilterParams : [];
-			// 	filterParamsArray.push(filterBy);
-			// 	this.setState({ appFilterParams: filterParamsArray }, () => this.setWines(this.state.wines));
-			// }
 		}
 	}
 
@@ -214,7 +208,7 @@ class App extends Component {
   				</div>
   				<div className="modal-inner">
   					<div className="modal-inner-head clearfix">
-							<img src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${this.state.selectedWine[14]}.jpg`} width="120" />
+							<img src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${this.state.selectedWine[14]}.png`} width="120" />
 							<div>
 								<p><strong>Rating: <span>{this.state.selectedWine[8]}</span></strong></p>
 								<p><strong>Current stock: <span>{this.state.selectedWine[13]}</span></strong></p>

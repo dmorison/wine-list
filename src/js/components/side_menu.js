@@ -40,13 +40,6 @@ class SideMenu extends Component {
 	}
 
 	handleChange(event) {
-		// console.log(event.target.value);
-		// console.log(event.target.id);
-		// let filterObj = {
-		// 	filterCat: parseInt(event.target.id),
-		// 	filterItem: event.target.value
-		// }
-		// this.props.onFilterSelect(filterObj);
 		if (event.target.id === "clear-filters") {
 			this.props.onFilterSelect(null);
 		} else {
@@ -83,6 +76,14 @@ class SideMenu extends Component {
 								<li><a>Newest to oldestt</a></li>
 							</ul>
 							<p className="margin-bottom"><strong>Filter</strong></p>
+							<label>
+								Stock:
+								<select id="stock" onChange={this.handleChange}>
+									<option value="default">Select stock option</option>
+									<option value="true">In stock</option>
+									<option value="false">Out of stock</option>
+								</select>
+							</label>
 							<label>
 								Country:
 								<select id="country" onChange={this.handleChange}>
