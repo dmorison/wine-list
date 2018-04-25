@@ -30,10 +30,35 @@
 
 			p.margin-bottom { font-size: 22px; }
 
+			.sm-form-btn {
+				background: transparent;
+			    border-radius: 5px;
+			    width: 100%;
+			    padding: 10px;
+			    margin-bottom: 12px;
+			}
+
+			label {
+				width: 100%;
+
+				select {
+					-webkit-appearance: none;
+					-moz-appearance: none;
+					appearance: none;
+					display: block;
+					background: transparent;
+					border-radius: 5px;
+					width: 100%;
+					padding: 10px;
+					margin: 5px 0px 12px 0px;
+					font-weight: normal;
+				}
+			}
+
 			ul {
 				padding-left: 20px;
 
-				&.last-ul { margin-bottom: 20px; }
+				&.last-ul { margin-bottom: 24px; }
 
 				li {
 					list-style-type: none;

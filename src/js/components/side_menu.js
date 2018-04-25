@@ -62,8 +62,6 @@ class SideMenu extends Component {
 						</a>
 						<br />
 						<form>
-							<button id="clear-filters" onClick={this.handleChange}>CLEAR</button>
-							
 							<p className="margin-bottom"><strong>Sort</strong></p>
 							<p><strong>Price:</strong></p>
 							<ul>
@@ -76,6 +74,7 @@ class SideMenu extends Component {
 								<li><a>Newest to oldestt</a></li>
 							</ul>
 							<p className="margin-bottom"><strong>Filter</strong></p>
+							<button className="sm-form-btn" id="clear-filters" onClick={this.handleChange}>Clear Filters</button>
 							<label>
 								Stock:
 								<select id="stock" onChange={this.handleChange}>
