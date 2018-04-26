@@ -46,6 +46,10 @@ class App extends Component {
 		this.getSheetsData(this.state.currRange);
 	}
 
+	// local development start
+	timeoutID;
+	// local development end
+
 	handlePageNumber() {
 		let loadWines = this.state.currPage + 5;
 		let newRange = '!A1:O' + loadWines.toString();
@@ -57,10 +61,11 @@ class App extends Component {
 	setWines(wineArray) {
 		if (this.state.numFilters === 0) {
 			console.log("there are no filters set");
+			console.log(wineArray);
 			this.setState({
 				wines: wineArray,
 				selectedWine: wineArray[0]
-			});
+			}, () => {window.clearTimeout(this.timeoutID)}); // local development added function
 		} else {
 			console.log(wineArray);
 			let filteredWines = [];
@@ -90,7 +95,7 @@ class App extends Component {
 			this.setState({
 				wines: filteredWines,
 				selectedWine: filteredWines[0]
-			});
+			}, () => {window.clearTimeout(this.timeoutID)}); // local development added function
 		}
 	}
 
@@ -105,19 +110,30 @@ class App extends Component {
 		} else {
 			dataRange = this.state.currRange;
 		}
-		const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1${dataRange}?key=${apiKey}`;
+
+		// local development start
+		this.timeoutID = window.setTimeout(() => {
+			let data = require('./utils/winesheetdata.json');
+			let wines = data.values;
+			let totals = wines[0];
+			wines.splice(0, 2);
+			this.setWines(wines);
+		}, 1000);
+		// local development end		
+
+		// const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1${dataRange}?key=${apiKey}`;
 		
-		axios.get(apiV4)
-			.then((response) => {
-				let wines = response.data.values;
-				let totals = wines[0];
-				console.log(totals);
-				wines.splice(0, 2);
-				this.setWines(wines);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		// axios.get(apiV4)
+		// 	.then((response) => {
+		// 		let wines = response.data.values;
+		// 		let totals = wines[0];
+		// 		console.log(totals);
+		// 		wines.splice(0, 2);
+		// 		this.setWines(wines);
+		// 	})
+		// 	.catch((error) => {
+		// 		console.log(error);
+		// 	});
 	}
 
 	handleFilter(filterBy) {
