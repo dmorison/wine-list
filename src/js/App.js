@@ -194,17 +194,32 @@ class App extends Component {
 
 	sortWines(sortBy, toSort) {
 		console.log(sortBy);
-		switch (sortBy[1]) {
-			case 'highLow':
-				return toSort.sort((a, b) => {
-					return b[sortBy[0]] - a[sortBy[0]];
-				});
-				break;
-			case 'lowHigh':
-				return toSort.sort((a, b) => {
-					return a[sortBy[0]] - b[sortBy[0]];
-				});
-				break;	
+		if (sortBy[0] === 10) {
+			switch (sortBy[1]) {
+				case 'highLow':
+					return toSort.sort((a, b) => {
+						return new Date(b[sortBy[0]]) - new Date(a[sortBy[0]]);
+					});
+					break;
+				case 'lowHigh':
+					return toSort.sort((a, b) => {
+						return new Date(a[sortBy[0]]) - new Date(b[sortBy[0]]);
+					});
+					break;	
+			}
+		} else {
+			switch (sortBy[1]) {
+				case 'highLow':
+					return toSort.sort((a, b) => {
+						return b[sortBy[0]] - a[sortBy[0]];
+					});
+					break;
+				case 'lowHigh':
+					return toSort.sort((a, b) => {
+						return a[sortBy[0]] - b[sortBy[0]];
+					});
+					break;	
+			}
 		}
 	}
 
