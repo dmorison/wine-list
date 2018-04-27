@@ -13,11 +13,11 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		this.handleShow = this.handleShow.bind(this);
-		this.handleClose = this.handleClose.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
-		this.handleFilter = this.handleFilter.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+		this.handleShow = this.handleShow.bind(this);
 		this.handlePageNumber = this.handlePageNumber.bind(this);
+		this.handleFilter = this.handleFilter.bind(this);
 		this.handleSort = this.handleSort.bind(this);
 
 		this.state = {
@@ -51,6 +51,34 @@ class App extends Component {
 	// // local development start
 	// timeoutID;
 	// // local development end
+
+	componentDidMount() {
+		window.addEventListener('scroll', this.handleScroll);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.handleScroll);
+	}
+
+	// handle the page position for sticky top menu
+	handleScroll(event) {
+		if (window.pageYOffset || document.body.scrollTop > 1) {
+			this.setState({ topOfPage: false });
+		} else {
+			this.setState({ topOfPage: true });
+		}
+	}
+
+	handleClose() {
+		this.setState({ show: false });
+	}
+
+	handleShow(wine) {
+		this.setState({
+			selectedWine: wine,
+			show: true
+		});
+	}
 
 	handlePageNumber() {
 		let loadWines = this.state.currPage + 5;
@@ -90,7 +118,7 @@ class App extends Component {
 							if (appFilterParams[key].value === "true") {
 								filteredWines = wineArray.filter(wine => wine[appFilterParams[key].catId] > 0);
 							} else {
-								filteredWines = wineArray.filter(wine => wine[appFilterParams[key].catId] === 0);
+								filteredWines = wineArray.filter(wine => wine[appFilterParams[key].catId] < 1);
 							}
 						} else {
 							filteredWines = wineArray.filter(wine => wine[appFilterParams[key].catId] === appFilterParams[key].value);
@@ -243,34 +271,6 @@ class App extends Component {
 		this.setState({
 			sortParams: [sortId, sortVal],
 			wines: wineArray
-		});
-	}
-
-	componentDidMount() {
-		window.addEventListener('scroll', this.handleScroll);
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener('scroll', this.handleScroll);
-	}
-
-	// handle the page position for sticky top menu
-	handleScroll(event) {
-		if (window.pageYOffset || document.body.scrollTop > 1) {
-			this.setState({ topOfPage: false });
-		} else {
-			this.setState({ topOfPage: true });
-		}
-	}
-
-	handleClose() {
-		this.setState({ show: false });
-	}
-
-	handleShow(wine) {
-		this.setState({
-			selectedWine: wine,
-			show: true
 		});
 	}
 
