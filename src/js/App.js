@@ -26,7 +26,7 @@ class App extends Component {
 			show: false,
 			topOfPage: true,
 			currPage: 10,
-			currRange: '!A1:O10',
+			initRange: '!A1:O10',
 			sortParams: null,
 			numFilters: 0,
 			filterParams: {
@@ -45,7 +45,7 @@ class App extends Component {
 			}
 		};
 
-		this.getSheetsData(this.state.currRange);
+		this.getSheetsData(this.state.initRange);
 	}
 
 	// // local development start
@@ -90,30 +90,28 @@ class App extends Component {
 	// set what wines to show on app state
 	setWines(wineArray) {
 		if (this.state.numFilters === 0) {
-			console.log("there are no filters set");
-			console.log(wineArray);
-			let thisWineArray;
+
+			let sortWineArray;
 			if (this.state.sortParams) {
-				thisWineArray = this.sortWines(this.state.sortParams, wineArray);
+				sortWineArray = this.sortWines(this.state.sortParams, wineArray);
 			} else {
-				thisWineArray = wineArray;
+				sortWineArray = wineArray;
 			}
-			console.log(thisWineArray);
+			
 			this.setState({
-				wines: thisWineArray,
-				selectedWine: thisWineArray[0]
+				wines: sortWineArray,
+				selectedWine: sortWineArray[0]
 			}); // local development added function
+
 		} else {
-			console.log("please filter wines");
-			console.log(wineArray);
+			
 			let filteredWines = [];
 			let appFilterParams = this.state.filterParams;
+
 			Object.keys(appFilterParams).forEach(key => {
 				if (appFilterParams[key].value) {
-					console.log(key);
-					console.log(appFilterParams[key].catId);
-					console.log(appFilterParams[key].value);
 					if (filteredWines.length < 1) {
+
 						if (key === "stock") {
 							if (appFilterParams[key].value === "true") {
 								filteredWines = wineArray.filter(wine => wine[appFilterParams[key].catId] > 0);
@@ -123,16 +121,19 @@ class App extends Component {
 						} else {
 							filteredWines = wineArray.filter(wine => wine[appFilterParams[key].catId] === appFilterParams[key].value);
 						}
+
 					} else {
+
 						filteredWines = filteredWines.filter(wine => wine[appFilterParams[key].catId] === appFilterParams[key].value);
+					
 					}
 				}
 			});
-			console.log(filteredWines);
 
 			if (this.state.sortParams) {
 				filteredWines = this.sortWines(this.state.sortParams, filteredWines);
 			}
+			
 			this.setState({
 				wines: filteredWines,
 				selectedWine: filteredWines[0]
@@ -145,57 +146,55 @@ class App extends Component {
 		let queryRange = range ? range : '';
 		const apiKey = Variables().API_KEY;
 		const sheetId = Variables().Sheet_Id;
+
 		let dataRange;
 		if (this.state.numFilters > 0) {
 			dataRange = queryRange;
 		} else {
-			dataRange = this.state.currRange;
+			dataRange = this.state.initRange;
 		}
-
-		// // local development start
-		// this.timeoutID = window.setTimeout(() => {
-		// 	let data = require('./utils/winesheetdata.json');
-		// 	let wines = data.values;
-		// 	console.log(wines.length);
-		// 	console.log(wines);
-		// 	let totals = wines[0];
-		// 	wines.splice(0, 2);
-		// 	this.setWines(wines);
-		// }, 1000);
-		// // local development end		
 
 		const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1${dataRange}?key=${apiKey}`;
 		
 		axios.get(apiV4)
 			.then((response) => {
 				let wines = response.data.values;
-				console.log(wines.length);
-				console.log(wines);
 				let totals = wines[0];
-				console.log(totals);
 				wines.splice(0, 2);
 				this.setWines(wines);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
+
+		// // local development start
+		// this.timeoutID = window.setTimeout(() => {
+		// 	let data = require('./utils/winesheetdata.json');
+		// 	let wines = data.values;
+		// 	let totals = wines[0];
+		// 	wines.splice(0, 2);
+		// 	this.setWines(wines);
+		// }, 1000);
+		// // local development end		
 	}
 
 	handleFilter(filterBy) {
 		if (!filterBy) {
+
+			console.log("clear filters");
 			let appFilterParams = this.state.filterParams;
+			
 			Object.keys(appFilterParams).forEach(key => {
-				console.log(key);
-				console.log(appFilterParams[key]);
 				appFilterParams[key].value = null;
 			});
 
-			console.log(appFilterParams);
 			this.setState({
 				filterParams: appFilterParams,
 				numFilters: 0
 			}, () => this.getSheetsData());
+
 		} else {
+
 			console.log(filterBy);
 			let filterCat = filterBy[0];
 			let filterValue = filterBy[1];
@@ -210,49 +209,50 @@ class App extends Component {
 				appFilterParams[filterCat].value = filterValue;
 				numberFilters++;
 			}
-			console.log(numberFilters);
-			console.log(appFilterParams);
 
 			this.setState({
 				filterParams: appFilterParams,
 				numFilters: numberFilters
 			}, () => this.getSheetsData());
+
 		}
 	}
 
-	sortWines(sortBy, toSort) {
-		console.log(sortBy);
+	sortWines(sortBy, wineArray) {
 		if (sortBy[0] === 10) {
+
 			switch (sortBy[1]) {
 				case 'highLow':
-					return toSort.sort((a, b) => {
+					return wineArray.sort((a, b) => {
 						return new Date(b[sortBy[0]]) - new Date(a[sortBy[0]]);
 					});
 					break;
 				case 'lowHigh':
-					return toSort.sort((a, b) => {
+					return wineArray.sort((a, b) => {
 						return new Date(a[sortBy[0]]) - new Date(b[sortBy[0]]);
 					});
 					break;	
 			}
+
 		} else {
+
 			switch (sortBy[1]) {
 				case 'highLow':
-					return toSort.sort((a, b) => {
+					return wineArray.sort((a, b) => {
 						return b[sortBy[0]] - a[sortBy[0]];
 					});
 					break;
 				case 'lowHigh':
-					return toSort.sort((a, b) => {
+					return wineArray.sort((a, b) => {
 						return a[sortBy[0]] - b[sortBy[0]];
 					});
 					break;	
 			}
+
 		}
 	}
 
 	handleSort(sortBy) {
-		console.log(sortBy);
 		let sortId = null;
 		switch (sortBy[0]) {
 			case 'price':
@@ -262,29 +262,28 @@ class App extends Component {
 				sortId = 10;
 				break;
 		}
-		// let appSortParams = this.state.sortParams;
-		// let sortId = appSortParams[sortBy[0]].catId;
-		let sortVal = sortBy[1];
-		let wineArray = this.sortWines([sortId, sortVal], this.state.wines);
-		// appSortParams[sortBy[0]].value = sortVal;
-		console.log(wineArray);
+		
+		let sortDirection = sortBy[1];
+		let wineArray = this.sortWines([sortId, sortDirection], this.state.wines);
+		
 		this.setState({
-			sortParams: [sortId, sortVal],
+			sortParams: [sortId, sortDirection],
 			wines: wineArray
 		});
 	}
 
   render() {
   	let activeWine = null;
-  	let grapes = null;
-
-  	if (this.state.selectedWine && this.state.selectedWine[7] !== '') {
-  		grapes = this.state.selectedWine[7];
-  	} else if (this.state.selectedWine) {
-  		grapes = this.state.selectedWine[6];
-  	}
-
+  	
   	if (this.state.selectedWine) {
+
+  		let grapes = null;
+	  	if (this.state.selectedWine[7] !== '') {
+	  		grapes = this.state.selectedWine[7];
+	  	} else if (this.state.selectedWine) {
+	  		grapes = this.state.selectedWine[6];
+	  	}
+
   		activeWine = (
   			<Modal show={this.state.show} onHide={this.handleClose}>
   				<div className={`map-area type-${this.state.selectedWine[0]}`}>
@@ -327,9 +326,11 @@ class App extends Component {
 					</div>
 				</Modal>
   		);
+
   	}
 
     return (
+
       <div className="App">
       	<div className="outer-container">
 	      	{/*<WineDetail
@@ -352,6 +353,7 @@ class App extends Component {
 		      </main>
 	      </div>
       </div>
+
     );
   }
   
