@@ -25,8 +25,10 @@ class App extends Component {
 			selectedWine: null,
 			show: false,
 			topOfPage: true,
-			currPage: 10,
-			initRange: '!A1:O10',
+			currPage: 20,
+			initRange: '!A1:O20',
+			totalWines: 0,
+			inStockWines: 0,
 			sortParams: null,
 			numFilters: 0,
 			filterParams: {
@@ -81,10 +83,11 @@ class App extends Component {
 	}
 
 	handlePageNumber() {
-		let loadWines = this.state.currPage + 5;
+		console.log(this.state.currPage);
+		let loadWines = this.state.currPage + 8;
 		let newRange = '!A1:O' + loadWines.toString();
-		this.getSheetsData(newRange);
-		this.setState({ currPage: loadWines });
+		console.log(newRange);
+		this.setState({ currPage: loadWines }, () => this.getSheetsData(newRange));
 	}
 
 	// set what wines to show on app state
@@ -133,7 +136,7 @@ class App extends Component {
 			if (this.state.sortParams) {
 				filteredWines = this.sortWines(this.state.sortParams, filteredWines);
 			}
-			
+
 			this.setState({
 				wines: filteredWines,
 				selectedWine: filteredWines[0]
@@ -148,7 +151,7 @@ class App extends Component {
 		const sheetId = Variables().Sheet_Id;
 
 		let dataRange;
-		if (this.state.numFilters > 0) {
+		if (this.state.numFilters > 0 || this.state.currPage > 20) {
 			dataRange = queryRange;
 		} else {
 			dataRange = this.state.initRange;
@@ -159,8 +162,17 @@ class App extends Component {
 		axios.get(apiV4)
 			.then((response) => {
 				let wines = response.data.values;
+
 				let totals = wines[0];
+				let appTotalWines = totals[14];
+				let appInStockWines = totals[13];
+				this.setState({
+					totalWines: appTotalWines,
+					inStockWines: appInStockWines
+				});
+
 				wines.splice(0, 2);
+
 				this.setWines(wines);
 			})
 			.catch((error) => {
@@ -338,6 +350,8 @@ class App extends Component {
 	      		handleModal={this.state.show} />*/}
 	      	<SideMenu
 	      		pagePosition={this.state.topOfPage}
+	      		appTotalWines={this.state.totalWines}
+	      		appInStockWines={this.state.inStockWines}
 	      		onFilterSelect={filterParam => this.handleFilter(filterParam)}
 	      		onSortSelect={sortParam => this.handleSort(sortParam)}
 	      	/>

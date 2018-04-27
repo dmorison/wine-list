@@ -55,6 +55,9 @@ class SideMenu extends Component {
 						</a>
 						<br />
 
+						<p className="margin-bottom">Total wines: {this.props.appTotalWines}</p>
+						<p className="margin-bottom">Currently in stock: {this.props.appInStockWines}</p>
+
 						<form>
 							<p className="margin-bottom"><strong>Sort</strong></p>
 							<p><strong>Price:</strong></p>
