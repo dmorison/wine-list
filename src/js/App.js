@@ -18,6 +18,7 @@ class App extends Component {
 		this.handleScroll = this.handleScroll.bind(this);
 		this.handleFilter = this.handleFilter.bind(this);
 		this.handlePageNumber = this.handlePageNumber.bind(this);
+		this.handleSort = this.handleSort.bind(this);
 
 		this.state = {
 			wines: [],
@@ -26,6 +27,7 @@ class App extends Component {
 			topOfPage: true,
 			currPage: 10,
 			currRange: '!A1:O10',
+			sortParams: null,
 			numFilters: 0,
 			filterParams: {
 				stock: {
@@ -46,9 +48,9 @@ class App extends Component {
 		this.getSheetsData(this.state.currRange);
 	}
 
-	// local development start
-	timeoutID;
-	// local development end
+	// // local development start
+	// timeoutID;
+	// // local development end
 
 	handlePageNumber() {
 		let loadWines = this.state.currPage + 5;
@@ -62,11 +64,19 @@ class App extends Component {
 		if (this.state.numFilters === 0) {
 			console.log("there are no filters set");
 			console.log(wineArray);
+			let thisWineArray;
+			if (this.state.sortParams) {
+				thisWineArray = this.sortWines(this.state.sortParams, wineArray);
+			} else {
+				thisWineArray = wineArray;
+			}
+			console.log(thisWineArray);
 			this.setState({
-				wines: wineArray,
-				selectedWine: wineArray[0]
-			}, () => {window.clearTimeout(this.timeoutID)}); // local development added function
+				wines: thisWineArray,
+				selectedWine: thisWineArray[0]
+			}); // local development added function
 		} else {
+			console.log("please filter wines");
 			console.log(wineArray);
 			let filteredWines = [];
 			let appFilterParams = this.state.filterParams;
@@ -92,10 +102,13 @@ class App extends Component {
 			});
 			console.log(filteredWines);
 
+			if (this.state.sortParams) {
+				filteredWines = this.sortWines(this.state.sortParams, filteredWines);
+			}
 			this.setState({
 				wines: filteredWines,
 				selectedWine: filteredWines[0]
-			}, () => {window.clearTimeout(this.timeoutID)}); // local development added function
+			}); // local development added function
 		}
 	}
 
@@ -111,29 +124,33 @@ class App extends Component {
 			dataRange = this.state.currRange;
 		}
 
-		// local development start
-		this.timeoutID = window.setTimeout(() => {
-			let data = require('./utils/winesheetdata.json');
-			let wines = data.values;
-			let totals = wines[0];
-			wines.splice(0, 2);
-			this.setWines(wines);
-		}, 1000);
-		// local development end		
+		// // local development start
+		// this.timeoutID = window.setTimeout(() => {
+		// 	let data = require('./utils/winesheetdata.json');
+		// 	let wines = data.values;
+		// 	console.log(wines.length);
+		// 	console.log(wines);
+		// 	let totals = wines[0];
+		// 	wines.splice(0, 2);
+		// 	this.setWines(wines);
+		// }, 1000);
+		// // local development end		
 
-		// const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1${dataRange}?key=${apiKey}`;
+		const apiV4 = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1${dataRange}?key=${apiKey}`;
 		
-		// axios.get(apiV4)
-		// 	.then((response) => {
-		// 		let wines = response.data.values;
-		// 		let totals = wines[0];
-		// 		console.log(totals);
-		// 		wines.splice(0, 2);
-		// 		this.setWines(wines);
-		// 	})
-		// 	.catch((error) => {
-		// 		console.log(error);
-		// 	});
+		axios.get(apiV4)
+			.then((response) => {
+				let wines = response.data.values;
+				console.log(wines.length);
+				console.log(wines);
+				let totals = wines[0];
+				console.log(totals);
+				wines.splice(0, 2);
+				this.setWines(wines);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 
 	handleFilter(filterBy) {
@@ -173,6 +190,45 @@ class App extends Component {
 				numFilters: numberFilters
 			}, () => this.getSheetsData());
 		}
+	}
+
+	sortWines(sortBy, toSort) {
+		console.log(sortBy);
+		switch (sortBy[1]) {
+			case 'highLow':
+				return toSort.sort((a, b) => {
+					return b[sortBy[0]] - a[sortBy[0]];
+				});
+				break;
+			case 'lowHigh':
+				return toSort.sort((a, b) => {
+					return a[sortBy[0]] - b[sortBy[0]];
+				});
+				break;	
+		}
+	}
+
+	handleSort(sortBy) {
+		console.log(sortBy);
+		let sortId = null;
+		switch (sortBy[0]) {
+			case 'price':
+				sortId = 12;
+				break;
+			case 'date':
+				sortId = 10;
+				break;
+		}
+		// let appSortParams = this.state.sortParams;
+		// let sortId = appSortParams[sortBy[0]].catId;
+		let sortVal = sortBy[1];
+		let wineArray = this.sortWines([sortId, sortVal], this.state.wines);
+		// appSortParams[sortBy[0]].value = sortVal;
+		console.log(wineArray);
+		this.setState({
+			sortParams: [sortId, sortVal],
+			wines: wineArray
+		});
 	}
 
 	componentDidMount() {
@@ -267,6 +323,7 @@ class App extends Component {
 	      	<SideMenu
 	      		pagePosition={this.state.topOfPage}
 	      		onFilterSelect={filterParam => this.handleFilter(filterParam)}
+	      		onSortSelect={sortParam => this.handleSort(sortParam)}
 	      	/>
 	      	<MainHeader pagePosition={this.state.topOfPage} />
 	      	<main className="page-wrap">

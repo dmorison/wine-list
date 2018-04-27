@@ -9,9 +9,10 @@ class SideMenu extends Component {
 		this.sideMenuOpen = this.sideMenuOpen.bind(this);
 		this.handleFilterSelect = this.handleFilterSelect.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		this.handleSort = this.handleSort.bind(this);
 
 		this.state = {
-			smOpen: false,
+			smOpen: false
 		}
 	}
 
@@ -39,6 +40,11 @@ class SideMenu extends Component {
 		this.props.onFilterSelect(filterObj);
 	}
 
+	handleSort(event) {
+		let sortArray = event.target.value.split('_');
+		this.props.onSortSelect(sortArray);
+	}
+
 	handleChange(event) {
 		if (event.target.id === "clear-filters") {
 			this.props.onFilterSelect(null);
@@ -64,15 +70,27 @@ class SideMenu extends Component {
 						<form>
 							<p className="margin-bottom"><strong>Sort</strong></p>
 							<p><strong>Price:</strong></p>
-							<ul>
+							<label htmlFor="price_highLow">
+								<input type="radio" name="sort-wines" id="price_highLow" value="price_highLow" onChange={this.handleSort} />High to low
+							</label>
+							<label htmlFor="price_lowHigh">
+								<input type="radio" name="sort-wines" id="price_lowHigh" value="price_lowHigh" onChange={this.handleSort} />Low to high
+							</label>
+							{/*<ul>
 								<li><a onClick={() => this.props.onSortSelect('highlow')}>High to low</a></li>
 								<li><a>Low to high</a></li>
-							</ul>
-							<p><strong>Added:</strong></p>
-							<ul className="last-ul">
+							</ul>*/}
+							{/*<p><strong>Added:</strong></p>
+							<label htmlFor="added_highLow">
+								<input type="radio" name="sort-wines" id="added_highLow" value="date_highLow" onChange={this.handleSort} />Newest to oldest
+							</label>
+							<label htmlFor="added_lowHigh">
+								<input type="radio" name="sort-wines" id="added_lowHigh" value="date_lowHigh" onChange={this.handleSort} />Oldest to Newest
+							</label>*/}
+							{/*<ul className="last-ul">
 								<li><a>Oldest to newest</a></li>
 								<li><a>Newest to oldestt</a></li>
-							</ul>
+							</ul>*/}
 							<p className="margin-bottom"><strong>Filter</strong></p>
 							<button className="sm-form-btn" id="clear-filters" onClick={this.handleChange}>Clear Filters</button>
 							<label>
