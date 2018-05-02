@@ -60,24 +60,27 @@ class SideMenu extends Component {
 
 						<form>
 							<p className="margin-bottom"><strong>Sort</strong></p>
-							<p><strong>Price:</strong></p>
-							<label htmlFor="price_highLow">
-								<input type="radio" name="sort-wines" id="price_highLow" value="price_highLow" onChange={this.initSort} />High to low
-							</label>
-							<label htmlFor="price_lowHigh">
-								<input type="radio" name="sort-wines" id="price_lowHigh" value="price_lowHigh" onChange={this.initSort} />Low to high
-							</label>
+							<div className="sort-block">
+								<p><strong>Price:</strong></p>
+								<label className="sort-label" htmlFor="price_highLow">
+									<input type="radio" name="sort-wines" id="price_highLow" value="price_highLow" onChange={this.initSort} />High to low
+								</label>
+								<label className="sort-label" htmlFor="price_lowHigh">
+									<input type="radio" name="sort-wines" id="price_lowHigh" value="price_lowHigh" onChange={this.initSort} />Low to high
+								</label>
+							</div>
 							
-							<p><strong>Date added:</strong></p>
-							<label htmlFor="date_highLow">
-								<input type="radio" name="sort-wines" id="date_highLow" value="date_highLow" onChange={this.initSort} />Newest to oldest
-							</label>
-							<label htmlFor="date_lowHigh">
-								<input type="radio" name="sort-wines" id="date_lowHigh" value="date_lowHigh" onChange={this.initSort} />Oldest to Newest
-							</label>
+							<div className="sort-block">
+								<p><strong>Date added:</strong></p>
+								<label className="sort-label" htmlFor="date_highLow">
+									<input type="radio" name="sort-wines" id="date_highLow" value="date_highLow" onChange={this.initSort} />Newest to oldest
+								</label>
+								<label className="sort-label" htmlFor="date_lowHigh">
+									<input type="radio" name="sort-wines" id="date_lowHigh" value="date_lowHigh" onChange={this.initSort} />Oldest to Newest
+								</label>
+							</div>
 							
 							<p className="margin-bottom"><strong>Filter</strong></p>
-							<button className="sm-form-btn" id="clear-filters" onClick={this.initFilter}>Clear Filters</button>
 							
 							<label>
 								Stock:
@@ -86,6 +89,7 @@ class SideMenu extends Component {
 									<option value="true">In stock</option>
 									<option value="false">Out of stock</option>
 								</select>
+								{/*<i className="fas fa-chevron-down fa-lg"></i>*/}
 							</label>
 							
 							<label>
@@ -99,6 +103,7 @@ class SideMenu extends Component {
 									<option value="Australia">Australia</option>
 									{/*<option value="Other">Other</option>*/}
 								</select>
+								{/*<i className="fas fa-chevron-down fa-lg"></i>*/}
 							</label>
 							
 							<label>
@@ -113,7 +118,10 @@ class SideMenu extends Component {
 									<option value="Cabernet Franc">Cabernet Franc</option>
 									<option value="Malbec">Malbec</option>
 								</select>
+								{/*<i className="fas fa-chevron-down fa-lg"></i>*/}
 							</label>
+
+							<button className="sm-form-btn" id="clear-filters" onClick={this.initFilter}>Clear Filters</button>
 						</form>
 
 					</div>

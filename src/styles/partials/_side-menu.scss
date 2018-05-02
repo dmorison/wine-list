@@ -32,14 +32,22 @@
 
 			.sm-form-btn {
 				background: transparent;
-			    border-radius: 5px;
+			    border-radius: 20px;
 			    width: 100%;
 			    padding: 10px;
+			    margin-top: 16px;
 			    margin-bottom: 12px;
+
+			    transition: all .4s ease-in-out;
+
+			    &:hover {
+			    	background-color: rgba(230, 239, 236, .3);
+			    }
 			}
 
 			label {
 				width: 100%;
+				position: relative;
 
 				select {
 					-webkit-appearance: none;
@@ -52,27 +60,47 @@
 					padding: 10px;
 					margin: 5px 0px 12px 0px;
 					font-weight: normal;
-				}
-			}
 
-			/* ul {
-				padding-left: 20px;
+					transition: all .4s ease-in-out;
 
-				&.last-ul { margin-bottom: 24px; }
+					background-image: url(../../images/select-arrow-down.svg);
+					background-repeat: no-repeat;
+					background-position: 231px 10px;
+					background-size: 8%;
 
-				li {
-					list-style-type: none;
-
-					a {
-						color: #bbb;
-
-						&:hover {
-							color: #e6efec;
-							cursor: pointer;
-						}
+					&:hover {
+						cursor: pointer;
+						background-color: rgba(230, 239, 236, .3);
 					}
 				}
-			} */
+
+				/* svg {
+					position: absolute;
+					top: 37px;
+					right: 15px;
+				} */
+			}
+
+			.sort-block {
+				margin-bottom: 16px;
+
+				.sort-label {
+					font-weight: normal;
+
+					transition: all .4s ease-in-out;
+
+					&:hover {
+						cursor: pointer;
+						color: rgba(230, 239, 236, .5);
+					}
+
+					input {
+						margin-right: 10px;
+						position: relative;
+						top: -1px;
+					}
+				}
+			}
 		}
 	}
 
@@ -89,6 +117,7 @@
 		span {
 			display: block;
 			background-color: #e6efec;
+			border-radius: 2px;
 
 			&.cross-one {
 				width: 100%;
@@ -119,8 +148,9 @@
 			display: block;
 			width: 100%;
 			height: 5px;
-			background-color: #e6efec;
+			background-color: #fff;
 			margin-bottom: 5px;
+			border-radius: 2px;
 		}
 
 		&.sticky {

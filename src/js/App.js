@@ -19,6 +19,7 @@ class App extends Component {
 		this.handlePageNumber = this.handlePageNumber.bind(this);
 		this.handleFilter = this.handleFilter.bind(this);
 		this.handleSort = this.handleSort.bind(this);
+		this.handleRating = this.handleRating.bind(this);
 
 		this.state = {
 			wines: [],
@@ -284,6 +285,45 @@ class App extends Component {
 		});
 	}
 
+	handleRating() {
+		let rating = this.state.selectedWine[8] ? this.state.selectedWine[8] : null;
+		let starIcons;
+
+		if(rating) {
+			let halfStart = false;
+
+			if (rating % 1 > 0) {
+				halfStart = true;
+				rating = rating - 0.5;
+			}
+
+			let stars = [];
+			for (let i = 1; i <= 5; i++) {
+				if (i <= rating) {
+					stars.push('true');
+				} else if (i > rating && halfStart === true) {
+					stars.push('half');
+					halfStart = false;
+				} else {
+					stars.push('false');
+				}
+			};
+
+			starIcons = stars.map((star, i) => {
+					return (<img src={process.env.PUBLIC_URL + `/images/star-${star}.svg`} key={i} />);
+				}
+			);
+		} else {
+			starIcons = <p>Not yet rated</p>
+		}
+
+		return (
+			<div className="star-rating">
+				{starIcons}
+			</div>
+		);
+	}
+
   render() {
   	let activeWine = null;
   	
@@ -308,7 +348,7 @@ class App extends Component {
   					<div className="modal-inner-head clearfix">
 							<img src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${this.state.selectedWine[14]}.png`} width="120" />
 							<div>
-								<p><strong>Rating: <span>{this.state.selectedWine[8]}</span></strong></p>
+								{this.handleRating()}
 								<p><strong>Current stock: <span>{this.state.selectedWine[13]}</span></strong></p>
 							</div>
 						</div>
@@ -365,6 +405,7 @@ class App extends Component {
 		        {/*<button onClick={this.handleClick}>Get Wines</button>*/}
 		        {activeWine}
 		      </main>
+		      <div>Icons made by <a href="https://www.flaticon.com/authors/google" title="Google">Google</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 	      </div>
       </div>
 
