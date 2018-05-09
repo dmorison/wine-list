@@ -30,6 +30,7 @@ class App extends Component {
 			initRange: '!A1:O20',
 			totalWines: 0,
 			inStockWines: 0,
+			hideLoadMore: false,
 			sortParams: null,
 			numFilters: 0,
 			filterParams: {
@@ -84,11 +85,12 @@ class App extends Component {
 	}
 
 	handlePageNumber() {
-		console.log(this.state.currPage);
 		let loadWines = this.state.currPage + 8;
 		let newRange = '!A1:O' + loadWines.toString();
-		console.log(newRange);
 		this.setState({ currPage: loadWines }, () => this.getSheetsData(newRange));
+		if (loadWines >= this.state.totalWines) {
+			this.setState({ hideLoadMore: true });
+		}
 	}
 
 	// set what wines to show on app state
@@ -367,7 +369,7 @@ class App extends Component {
 								</tr>
 								<tr>
 									<td>Price:</td>
-									<td>{this.state.selectedWine[12]}</td>
+									<td>&pound; {this.state.selectedWine[12]}</td>
 								</tr>
 								<tr>
 									<td>Date:</td>
@@ -380,6 +382,8 @@ class App extends Component {
   		);
 
   	}
+
+  	let hideLoadMore = this.state.hideLoadMore ? "hide" : "";
 
     return (
 
@@ -401,7 +405,7 @@ class App extends Component {
 		        	onWineSelect={selectedWine => this.handleShow(selectedWine)}
 		        	wines={this.state.wines}
 		        />
-		        	<button className="load-more-btn" onClick={this.handlePageNumber}>Load more</button>
+		        	<button className={`load-more-btn ${hideLoadMore}`} onClick={this.handlePageNumber}>Load more</button>
 		        {/*<button onClick={this.handleClick}>Get Wines</button>*/}
 		        {activeWine}
 		      </main>

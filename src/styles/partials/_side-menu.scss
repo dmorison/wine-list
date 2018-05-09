@@ -32,6 +32,7 @@
 
 			.sm-form-btn {
 				background: transparent;
+				border: 1px solid #e6efec;
 			    border-radius: 20px;
 			    width: 100%;
 			    padding: 10px;
@@ -71,6 +72,10 @@
 					&:hover {
 						cursor: pointer;
 						background-color: rgba(230, 239, 236, .3);
+					}
+
+					option {
+						color: #000;
 					}
 				}
 
