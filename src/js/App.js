@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import Variables from './utils/variables';
 // import DataHandle from './utils/data_handle';
 import WineList from './components/wine_list';
@@ -246,7 +246,9 @@ class App extends Component {
 					return wineArray.sort((a, b) => {
 						return new Date(a[sortBy[0]]) - new Date(b[sortBy[0]]);
 					});
-					break;	
+					break;
+				default:
+					break;
 			}
 
 		} else {
@@ -261,7 +263,9 @@ class App extends Component {
 					return wineArray.sort((a, b) => {
 						return a[sortBy[0]] - b[sortBy[0]];
 					});
-					break;	
+					break;
+				default:
+					break;
 			}
 
 		}
@@ -275,6 +279,8 @@ class App extends Component {
 				break;
 			case 'date':
 				sortId = 10;
+				break;
+			default:
 				break;
 		}
 		
@@ -312,7 +318,7 @@ class App extends Component {
 			};
 
 			starIcons = stars.map((star, i) => {
-					return (<img src={process.env.PUBLIC_URL + `/images/star-${star}.svg`} key={i} />);
+					return (<img src={process.env.PUBLIC_URL + `/images/star-${star}.svg`} key={i} alt="" />);
 				}
 			);
 		} else {
@@ -352,7 +358,7 @@ class App extends Component {
   				</div>
   				<div className="modal-inner">
   					<div className="modal-inner-head clearfix">
-							<img src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${this.state.selectedWine[14]}.png`} width="120" />
+							<img src={process.env.PUBLIC_URL + `/images/wine_thumbnails/${this.state.selectedWine[14]}.png`} alt="wine label" width="120" />
 							<div>
 								{this.handleRating()}
 								<p><strong>Current stock: <span>{this.state.selectedWine[13]}</span></strong></p>
@@ -411,7 +417,7 @@ class App extends Component {
 		        {/*<button onClick={this.handleClick}>Get Wines</button>*/}
 		        {activeWine}
 		      </main>
-		      <div>Icons made by <a href="https://www.flaticon.com/authors/google" title="Google">Google</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+		      <div>Icons made by <a href="https://www.flaticon.com/authors/google" title="Google">Google</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer">CC 3.0 BY</a></div>
 	      </div>
       </div>
 
