@@ -338,9 +338,13 @@ class App extends Component {
 	  		grapes = this.state.selectedWine[6];
 	  	}
 
+	  	let country = this.state.selectedWine[3];
+	  	country = country.toLowerCase();
+	  	country = country.replace(/\s+/g, '');
+
   		activeWine = (
   			<Modal show={this.state.show} onHide={this.handleClose}>
-  				<div className={`map-area type-${this.state.selectedWine[0]}`}>
+  				<div className={`map-area type-${this.state.selectedWine[0]} ${country}`}>
   					<a className="sm-button-close" onClick={this.handleClose}>
 							<span className="cross-one"></span>
 							<span className="cross-two"></span>
@@ -383,8 +387,6 @@ class App extends Component {
 
   	}
 
-  	let hideLoadMore = this.state.hideLoadMore ? "hide" : "";
-
     return (
 
       <div className="App">
@@ -405,7 +407,7 @@ class App extends Component {
 		        	onWineSelect={selectedWine => this.handleShow(selectedWine)}
 		        	wines={this.state.wines}
 		        />
-		        	<button className={`load-more-btn ${hideLoadMore}`} onClick={this.handlePageNumber}>Load more</button>
+		        	<button className={`load-more-btn ${this.state.hideLoadMore ? "hide" : ""}`} onClick={this.handlePageNumber}>Load more</button>
 		        {/*<button onClick={this.handleClick}>Get Wines</button>*/}
 		        {activeWine}
 		      </main>

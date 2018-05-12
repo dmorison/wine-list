@@ -1,15 +1,25 @@
 .map-area {
 	width: 100%;
 	height: 160px;
-	background-color: #ccc;
 	border-top: 10px solid #fff;
 	border-radius: 6px 6px 0px 0px;
+
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
 
 	position: relative;
 
 	&.type-Red { border-top-color: #b10015; }
 	&.type-White,
 	&.type-Sparkling { border-top-color: #fdce66; }
+
+	&.southafrica { background-image: url(../../images/southafrica.png); }
+	&.france { background-image: url(../../images/france.png); }
+	&.italy { background-image: url(../../images/italy.png); }
+	&.spain { background-image: url(../../images/spain.png); }
+	&.australia { background-image: url(../../images/australia.png); }
+	&.newzealand { background-image: url(../../images/newzealand.png); }
 
 	.sm-button-close {
 		display: block;
